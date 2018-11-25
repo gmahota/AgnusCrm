@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AgnusCrm.Web.Models.View_PriceList>
+﻿@model IEnumerable<AgnusCrm.Web.Models.Product>
 
 @{
     ViewData["Title"] = "Price List";
@@ -19,21 +19,21 @@
         <tr>
 
             <th>
-                @Html.DisplayNameFor(model => model.marca_Desc)
+                @Html.DisplayNameFor(model => model.Brand.description)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.familia_Desc)
+                @Html.DisplayNameFor(model => model.Family.description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.subFamilia)
+                @Html.DisplayNameFor(model => model.SubFamily.description)
             </th>
             
             <th>
-                @Html.DisplayNameFor(model => model.artigo_Desc)
+                @Html.DisplayNameFor(model => model.desc)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.preco)
+                @Html.DisplayNameFor(model => model.price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.stock)
@@ -46,27 +46,27 @@
         <tr>
 
             <td>
-                @Html.DisplayFor(modelItem => item.marca_Desc)
+                @Html.DisplayFor(modelItem => item.Brand.description)
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.familia_Desc)
+                @Html.DisplayFor(modelItem => item.Family.description)
             </td>
             
             <td>
-                @Html.DisplayFor(modelItem => item.subFamilia_Desc)
+                @Html.DisplayFor(modelItem => item.SubFamily.description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.artigo_Desc)
+                @Html.DisplayFor(modelItem => item.desc)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.preco)
+                @Html.DisplayFor(modelItem => item.price)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.stock)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.artigo">Details</a> 
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> 
             </td>
         </tr>
 }

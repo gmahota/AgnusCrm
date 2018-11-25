@@ -22,7 +22,9 @@ namespace AgnusCrm.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Product.Include(p => p.brand).Include(p => p.family).Include(p => p.subFamily);
+            var applicationDbContext = _context.Product.Include(p => p.Brand)
+                .Include(p => p.Family)
+                .Include(p => p.SubFamily);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,9 +37,9 @@ namespace AgnusCrm.Controllers
             }
 
             var product = await _context.Product
-                .Include(p => p.brand)
-                .Include(p => p.family)
-                .Include(p => p.subFamily)
+                .Include(p => p.Brand)
+                .Include(p => p.Family)
+                .Include(p => p.SubFamily)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (product == null)
             {
@@ -141,9 +143,9 @@ namespace AgnusCrm.Controllers
             }
 
             var product = await _context.Product
-                .Include(p => p.brand)
-                .Include(p => p.family)
-                .Include(p => p.subFamily)
+                .Include(p => p.Brand)
+                .Include(p => p.Family)
+                .Include(p => p.SubFamily)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (product == null)
             {

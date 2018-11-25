@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgnusCrm.Web.Data;
 using AgnusCrm.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgnusCrm.Controllers
 {
+    [Authorize]
     public class PriceListController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,17 +24,31 @@ namespace AgnusCrm.Controllers
         // GET: View_PriceList
         public async Task<IActionResult> Index(string searchString)
         {
-            var priceLists = _context.View_PriceList.FromSql(
-                @"select * from View_PriceList"
-            );
-
+            
+            
             if (!String.IsNullOrEmpty(searchString))
             {
-                priceLists = priceLists.Where(s => s.artigo.Contains(searchString) || 
-                    s.artigo_Desc.Contains(searchString));
+                var priceList = _context.Product
+                    .Include(p => p.Brand)
+                    .Include(p => p.Family)
+                    .Include(p => p.SubFamily)
+                    .Where(s => s.code.Contains(searchString) ||
+                    s.desc.Contains(searchString));
+
+                return View(await priceList.ToListAsync());
+
+            }
+            else
+            {
+                var priceList = _context.Product
+                    .Include(p => p.Brand)
+                    .Include(p => p.Family)
+                    .Include(p => p.SubFamily);
+
+                return View(await priceList.ToListAsync());
             }
 
-            return View(await priceLists.ToListAsync());
+            
         }
 
         // GET: View_PriceList/Details/5

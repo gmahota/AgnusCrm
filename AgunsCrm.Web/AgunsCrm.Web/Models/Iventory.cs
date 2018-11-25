@@ -104,15 +104,15 @@ namespace AgnusCrm.Web.Models
 
         [ForeignKey("familyCode")]
         [Display(Name = "Famila")]
-        public virtual Family family { get; set; }
+        public virtual Family Family { get; set; }
 
         [ForeignKey("subFamilyCode")]
         [Display(Name = "Sub-Famila")]
-        public virtual SubFamily subFamily { get; set; }
+        public virtual SubFamily SubFamily { get; set; }
 
         [ForeignKey("brandCode")]
         [Display(Name = "Marca")]
-        public virtual Brand brand { get; set; }
+        public virtual Brand Brand { get; set; }
 
         public IList<ProductPrice> ProductPrice { get; set; }
     }
