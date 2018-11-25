@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AgnusCrm.Web.Models.Coin>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Symbol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.decimalPlaces)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.logo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Symbol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.decimalPlaces)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.logo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.code">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.code">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.code">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

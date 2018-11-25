@@ -1,0 +1,74 @@
+﻿@model IEnumerable<AgnusCrm.Web.Models.View_PriceList>
+
+@{
+    ViewData["Title"] = "Price List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Price List/Encomenda</h2>
+
+<form asp-controller="PriceList" asp-action="Index">
+    <p>
+        Artigo: <input type="text" name="SearchString">
+        <input type="submit" value="Filtro" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.marca_Desc)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.familia_Desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.subFamilia)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.artigo_Desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.stock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.marca_Desc)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.familia_Desc)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.subFamilia_Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.artigo_Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stock)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.artigo">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
