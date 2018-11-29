@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AgnusCrm.Controllers
 {
+    
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;

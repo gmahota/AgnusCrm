@@ -4,6 +4,63 @@
     ViewData["Title"] = "Price List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Scripts {
+    <script language=javascript type='text/javascript'>
+        $(document).ready(function () {
+            $(".Enc").change(function () {
+                
+                var selectedEnc = $(this).val();
+                
+                var qnt = $(this).val();
+
+                var produto = $(this).prop('id');
+
+                console.log($("#Price_" + produto));
+                var price = $("#Price_" + produto).prop('innerHTML').replace('.', '').replace(',', '.'); 
+
+                console.log(price);
+                var cart = { "id": produto, "qnt": qnt, "price": price };
+                
+                $.ajax({
+                    url: '/Cart/AddItem/' + cart.id + '?' +"quantity=" + cart.qnt + "&" + "price=" + cart.price,
+                    //type = 'GET',
+                    //contentType = 'application/json; charset=utf-8',
+                    //data: JSON.stringify(cart)
+                });
+
+            });
+        });
+        
+    </script>
+
+    <script>
+        function fazEncomenda(id) {
+            var sel = $("#Sel_" + id).is(':checked') ? 1 : 0;
+
+            if (sel == 1) {
+                $("#" + id).prop('disabled', false);
+            } else {
+                $("#" + id).prop('disabled', true);
+                $("#" + id).val(0);
+
+                var produto = $("#" + id).prop('id');
+                
+                var cart = { "id": produto };
+
+                $.ajax({
+                    url: '/Cart/RemoveItem/' + cart.id,
+                    //type = 'GET',
+                    //contentType = 'application/json; charset=utf-8',
+                    //data: JSON.stringify(cart)
+                });
+
+            }
+
+
+        }
+    </script>
+}
+
 
 <h2>Price List/Encomenda</h2>
 
@@ -13,10 +70,14 @@
         <input type="submit" value="Filtro" />
     </p>
 </form>
+    <a asp-controller="Cart" asp-action="Index">Terminar</a>
 
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Sel.
+            </th>
 
             <th>
                 @Html.DisplayNameFor(model => model.Brand.description)
@@ -28,7 +89,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.SubFamily.description)
             </th>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.desc)
             </th>
@@ -38,37 +99,89 @@
             <th>
                 @Html.DisplayNameFor(model => model.stock)
             </th>
-            <th></th>
+            <th>
+                Encomenda
+
+            </th>
+
+            @*<th></th>*@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @foreach (var item in Model)
+        {
+            <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.description)
-            </td>
+                <td>
+                    <input type="checkbox" id="Sel_@item.id" value="false" onclick="javascript:fazEncomenda(@item.id)" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Family.description)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Family.description)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.SubFamily.description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.stock)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> 
-            </td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubFamily.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.desc)
+                </td>
+                <td>
+
+                    @{
+                        string priceType = ViewData["PriceType"].ToString();
+                        switch (priceType)
+                        {
+                            case "PVP1":
+                                <span id="Price_@item.id">
+                                    @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp1)
+                                </span>
+                                break;
+                            case "PVP2":
+                                <span id="Price_@item.id">
+                                    @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp2)
+                                </span>
+                                break;
+                            case "PVP3":
+                                <span id="Price_@item.id">
+                                    @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp3)
+                                </span>
+                                break;
+                            case "PVP4":
+                                <span id="Price_@item.id">
+                                    @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp4)
+                                </span>
+                                break;
+                            case "PVP5":
+                                <span id="Price_@item.id">
+                                    @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp5)
+                                </span>
+                                break;
+                            case "PVP6":
+                                <span id="Price_@item.id">
+                                    @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp6)
+                                </span>
+                                break;
+                        }
+
+                    }
+
+
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.stock)
+                </td>
+                <td>
+                    <input type="number" class="Enc" id="@item.id" min="0" max="@item.stock" step="1" value="0" disabled="disabled" />
+                </td>
+                @*<td>
+                        <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                    </td>*@
+
+            </tr>
+        }
     </tbody>
 </table>

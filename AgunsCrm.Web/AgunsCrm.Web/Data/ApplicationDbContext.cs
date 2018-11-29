@@ -56,5 +56,7 @@ namespace AgnusCrm.Web.Data
         public DbSet<Unity> Unity { get; set; }
 
         public DbSet<Coin> Coin { get; set; }
+
+        public DbSet<AgnusCrm.Web.Models.Item> Item { get; set; }
     }
 }
