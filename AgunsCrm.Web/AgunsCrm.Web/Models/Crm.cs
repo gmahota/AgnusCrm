@@ -9,6 +9,20 @@ namespace AgnusCrm.Web.Models
 {
     public class CRM
     {
+        
+    }
+
+    public class Customer
+    {
+        [Key]
+        public int id { get; set; }
+
+        public int entityId { get; set; }
+
+        public string pvp { get; set; }
+
+        [ForeignKey("entityId")]
+        public Entity entity { get; set; }
     }
 
     public class Entity
@@ -16,20 +30,32 @@ namespace AgnusCrm.Web.Models
         [Key]
         public int id { get; set; }
 
+        [Display(Name ="Tipo")]
         public string type { get; set; }
-        public string entidade { get; set; }
-        public string nome { get; set; }
-        public string fac_Mor { get; set; }
-        public string fac_Local { get; set; }
-        public string numContrib { get; set; }
-        public string pais { get; set; }
-        public string fac_Tel { get; set; }
-        public string moeda { get; set; }
-        public bool enviaCobranca { get; set; }
-        public double valorPendente { get; set; }
-        public double valorDebitoTotal { get; set; }
-        public double valorCreditoTotal { get; set; }
 
+        [Display(Name ="Codigo")]
+        public string code { get; set; }
+
+        [Display(Name = "Nome")]
+        public string name { get; set; }
+
+        [Display(Name = "Morada")]
+        public string address { get; set; }
+
+        [Display(Name = "Localidade")]
+        public string locality { get; set; }
+
+        [Display(Name ="Nuit")]
+        public string contributing_Number { get; set; }
+
+        [Display(Name ="País")]
+        public string country { get; set; }
+
+        [Display(Name = "Telefone")]
+        public string telphone { get; set; }
+
+        [Display(Name ="Moeda")]
+        public string coin { get; set; }
     }
 
     public class Contact
@@ -45,17 +71,21 @@ namespace AgnusCrm.Web.Models
         public string type { get; set; }
         public string celphone { get; set; }
         public string telphone { get; set; }
+        public string userId { get; set; }
 
-        public List<Contact_Item> contact_Itens { get; set; }
-
+        public List<Contact_Entity> contact_Itens { get; set; }
     }
 
-    public class Contact_Item
+    
+
+    public class Contact_Entity
     {
         [Key]
         public int id { get; set; }
 
         public int contactId { get; set; }
+
+        public int entityId { get; set; }
 
         public string type { get; set; }
         public string name { get; set; }
@@ -63,18 +93,9 @@ namespace AgnusCrm.Web.Models
 
         [ForeignKey("contactId")]
         public Contact contact { get; set; }
-    }
 
-    public class Contact_Entity
-    {
-        [Key]
-        public int id { get; set; }
-
-        public string type { get; set; }
-        public string name { get; set; }
-        public string value { get; set; }
-
-
+        [ForeignKey("entityId")]
+        public Entity entity { get; set; }
     }
 
     public class Report
