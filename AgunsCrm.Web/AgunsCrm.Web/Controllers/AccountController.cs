@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using AgnusCrm.Web.Services;
 using Microsoft.Extensions.Options;
+using AgnusCrm.Web.Helpers;
+using AgnusCrm.Web.Data;
 
 namespace AgnusCrm.Web.Controllers
 {
@@ -25,8 +27,9 @@ namespace AgnusCrm.Web.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(
+        public AccountController(ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
@@ -36,6 +39,7 @@ namespace AgnusCrm.Web.Controllers
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _context = context;
         }
 
         [TempData]
@@ -66,6 +70,10 @@ namespace AgnusCrm.Web.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    //var customer = _context.c
+                    //SessionHelper.SetObjectAsJson<Customer>(customer,"customer");
+
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

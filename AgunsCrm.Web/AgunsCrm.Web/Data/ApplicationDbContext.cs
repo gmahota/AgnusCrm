@@ -22,6 +22,8 @@ namespace AgnusCrm.Web.Data
             builder.Entity<ProductPrice>()
                 .HasKey(a => new { a.product, a.coin, a.unity });
 
+            
+
             //builder.Entity<SubFamily>()
             //    .HasKey(a => new { a.code, a.familyCode });
 
@@ -58,5 +60,7 @@ namespace AgnusCrm.Web.Data
         public DbSet<Coin> Coin { get; set; }
 
         public DbSet<AgnusCrm.Web.Models.Item> Item { get; set; }
+
+        public DbSet<AgnusCrm.Web.Models.Customer> Customer { get; set; }
     }
 }

@@ -4,16 +4,14 @@ using AgnusCrm.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AgunsCrm.Web.Data.Migrations
+namespace AgnusCrm.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181125164030_first_commit")]
-    partial class first_commit
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,6 +62,65 @@ namespace AgunsCrm.Web.Data.Migrations
                     );
                 });
 
+            modelBuilder.Entity("AgnusCrm.Web.Models.Customer", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("entityId");
+
+                    b.Property<int>("pvp");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("entityId");
+
+                    b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("AgnusCrm.Web.Models.Entity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("address")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("code")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("coin")
+                        .HasMaxLength(3);
+
+                    b.Property<string>("coinCode");
+
+                    b.Property<string>("contributing_Number")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("country")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("locality")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("name")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("telphone")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("type")
+                        .HasMaxLength(20);
+
+                    b.HasKey("id");
+
+                    b.HasIndex("coinCode");
+
+                    b.ToTable("Entity");
+                });
+
             modelBuilder.Entity("AgnusCrm.Web.Models.Family", b =>
                 {
                     b.Property<string>("code")
@@ -76,6 +133,25 @@ namespace AgunsCrm.Web.Data.Migrations
                     b.HasKey("code");
 
                     b.ToTable("Family");
+                });
+
+            modelBuilder.Entity("AgnusCrm.Web.Models.Item", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("price");
+
+                    b.Property<int>("productId");
+
+                    b.Property<int>("quantity");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("Item");
                 });
 
             modelBuilder.Entity("AgnusCrm.Web.Models.Product", b =>
@@ -396,17 +472,40 @@ namespace AgunsCrm.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("AgnusCrm.Web.Models.Customer", b =>
+                {
+                    b.HasOne("AgnusCrm.Web.Models.Entity", "entity")
+                        .WithMany()
+                        .HasForeignKey("entityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AgnusCrm.Web.Models.Entity", b =>
+                {
+                    b.HasOne("AgnusCrm.Web.Models.Coin", "Coin")
+                        .WithMany()
+                        .HasForeignKey("coinCode");
+                });
+
+            modelBuilder.Entity("AgnusCrm.Web.Models.Item", b =>
+                {
+                    b.HasOne("AgnusCrm.Web.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("AgnusCrm.Web.Models.Product", b =>
                 {
-                    b.HasOne("AgnusCrm.Web.Models.Brand", "brand")
+                    b.HasOne("AgnusCrm.Web.Models.Brand", "Brand")
                         .WithMany("listProducts")
                         .HasForeignKey("brandCode");
 
-                    b.HasOne("AgnusCrm.Web.Models.Family", "family")
+                    b.HasOne("AgnusCrm.Web.Models.Family", "Family")
                         .WithMany("listProducts")
                         .HasForeignKey("familyCode");
 
-                    b.HasOne("AgnusCrm.Web.Models.SubFamily", "subFamily")
+                    b.HasOne("AgnusCrm.Web.Models.SubFamily", "SubFamily")
                         .WithMany()
                         .HasForeignKey("subFamilyCode")
                         .OnDelete(DeleteBehavior.Cascade);

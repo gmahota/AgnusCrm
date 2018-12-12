@@ -17,9 +17,13 @@ namespace AgnusCrm.Web.Models
         [Key]
         public int id { get; set; }
 
+        [Display(Name ="Entidade")]
+        
         public int entityId { get; set; }
 
-        public string pvp { get; set; }
+        [Display(Name ="PVP")]
+        [Range(1, 6)]
+        public int pvp { get; set; }
 
         [ForeignKey("entityId")]
         public Entity entity { get; set; }
@@ -31,52 +35,96 @@ namespace AgnusCrm.Web.Models
         public int id { get; set; }
 
         [Display(Name ="Tipo")]
+        [StringLength(20)]
         public string type { get; set; }
 
         [Display(Name ="Codigo")]
+        [StringLength(20)]
         public string code { get; set; }
 
         [Display(Name = "Nome")]
+        [StringLength(50)]
         public string name { get; set; }
 
         [Display(Name = "Morada")]
+        [StringLength(100)]
         public string address { get; set; }
 
         [Display(Name = "Localidade")]
+        [StringLength(20)]
         public string locality { get; set; }
 
         [Display(Name ="Nuit")]
+        [StringLength(20)]
         public string contributing_Number { get; set; }
 
         [Display(Name ="País")]
+        [StringLength(20)]
         public string country { get; set; }
 
         [Display(Name = "Telefone")]
+        [StringLength(30)]
         public string telphone { get; set; }
 
         [Display(Name ="Moeda")]
+        [StringLength(3)]
         public string coin { get; set; }
+
+        [ForeignKey("coinCode")]
+        public Coin Coin { get; set; }
     }
 
     public class Contact
     {
         [Key]
         public int id { get; set; }
+
+        [Display(Name ="Nome")]
+        [StringLength(100)]
+
         public string name { get; set; }
+
+        [Display(Name = "Primeiro Nome")]
+        [StringLength(50)]
         public string firstName { get; set; }
+
+        [Display(Name = "Ultimo Nome")]
+        [StringLength(50)]
         public string lastName { get; set; }
+
+        [Display(Name = "Titulo")]
+        [StringLength(10)]
         public string title { get; set; }
+
+        [Display(Name = "Email")]
+        [StringLength(50)]
         public string email { get; set; }
+
+        [Display(Name = "Email Alternativo")]
+        [StringLength(50)]
         public string emailAlt { get; set; }
+
+        [Display(Name ="Tipo")]
+        [StringLength(20)]
         public string type { get; set; }
-        public string celphone { get; set; }
-        public string telphone { get; set; }
+
+        [Display(Name = "Celular")]
+        [StringLength(20)]
+        public string cellPhone { get; set; }
+
+        [Display(Name = "Celular")]
+        [StringLength(20)]
+        public string telephone { get; set; }
+
+        [Display(Name ="Utilizador")]
+        [StringLength(100)]
         public string userId { get; set; }
+
+        [ForeignKey ("userId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
         public List<Contact_Entity> contact_Itens { get; set; }
     }
-
-    
 
     public class Contact_Entity
     {

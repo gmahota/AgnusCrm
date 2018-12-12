@@ -3,6 +3,82 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container" style="padding-top:50px">
+    <div class="row">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="creationdate">Module</label>
+                <div class="col-md-4">
+                    <select name="requestorcompany" class="form-control" id="requestorcompany">
+                        <option value="readonly">All</option>
+                        <option value="readonly">RH</option>
+                        <option value="readonly">Accounting</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Module</th>
+                    <th scope="col">Operation</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Total Amout(USD)</th>
+
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>12-07-2018</td>
+                    <td>RH</td>
+                    <td>Salary Payment</td>
+                    <td>Salary Payment Month Dezember</td>
+                    <td>50.000,00 </td>
+                    <td>
+                        <a href="#">Details</a> |
+                        <a href="#">Aproval</a> |
+                        <a href="#">Refused</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>12-07-2018</td>
+                    <td>RH</td>
+                    <td>UpDate employee</td>
+                    <td>Salary Payment Month Dezember</td>
+                    <td>50.000,00 </td>
+                    <td>
+                        <a href="#">Details</a> |
+                        <a href="#">Aproval</a> |
+                        <a href="#">Refused</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>12-07-2018</td>
+                    <td>Accounting</td>
+                    <td>Exchange differences</td>
+                    <td>Exchange differences Metical And Dollar </td>
+                    <td>500,00</td>
+                    <td>
+                        <a href="#">Details</a> |
+                        <a href="#">Aproval</a> |
+                        <a href="#">Refused</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    
+</div>
+
 
 <!------ Include the above in your HEAD tag ---------->
 
