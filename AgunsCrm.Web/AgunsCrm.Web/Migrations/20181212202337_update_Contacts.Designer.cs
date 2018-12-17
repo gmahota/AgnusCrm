@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgnusCrm.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181212193411_update_Contact")]
-    partial class update_Contact
+    [Migration("20181212202337_update_Contacts")]
+    partial class update_Contacts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,6 +64,79 @@ namespace AgnusCrm.Web.Migrations
                     );
                 });
 
+            modelBuilder.Entity("AgnusCrm.Web.Models.Contact", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("cellPhone")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("code")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("email")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("emailAlt")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("firstName")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("fullName")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("lastName")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("middleName")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("telephone")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("title")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("type")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("userId");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Contact");
+                });
+
+            modelBuilder.Entity("AgnusCrm.Web.Models.Contact_Entity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("contactId");
+
+                    b.Property<int>("entityId");
+
+                    b.Property<string>("name");
+
+                    b.Property<string>("type");
+
+                    b.Property<string>("value");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("contactId");
+
+                    b.HasIndex("entityId");
+
+                    b.ToTable("Contact_Entity");
+                });
+
             modelBuilder.Entity("AgnusCrm.Web.Models.Customer", b =>
                 {
                     b.Property<int>("id")
@@ -96,8 +169,6 @@ namespace AgnusCrm.Web.Migrations
                     b.Property<string>("coin")
                         .HasMaxLength(3);
 
-                    b.Property<string>("coinCode");
-
                     b.Property<string>("contributing_Number")
                         .HasMaxLength(20);
 
@@ -118,7 +189,7 @@ namespace AgnusCrm.Web.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("coinCode");
+                    b.HasIndex("coin");
 
                     b.ToTable("Entity");
                 });
@@ -363,6 +434,9 @@ namespace AgnusCrm.Web.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -402,6 +476,8 @@ namespace AgnusCrm.Web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -474,6 +550,36 @@ namespace AgnusCrm.Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("AgnusCrm.Web.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+
+                    b.ToTable("ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("AgnusCrm.Web.Models.Contact", b =>
+                {
+                    b.HasOne("AgnusCrm.Web.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("userId");
+                });
+
+            modelBuilder.Entity("AgnusCrm.Web.Models.Contact_Entity", b =>
+                {
+                    b.HasOne("AgnusCrm.Web.Models.Contact", "contact")
+                        .WithMany("contact_Itens")
+                        .HasForeignKey("contactId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AgnusCrm.Web.Models.Entity", "entity")
+                        .WithMany()
+                        .HasForeignKey("entityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("AgnusCrm.Web.Models.Customer", b =>
                 {
                     b.HasOne("AgnusCrm.Web.Models.Entity", "entity")
@@ -486,7 +592,7 @@ namespace AgnusCrm.Web.Migrations
                 {
                     b.HasOne("AgnusCrm.Web.Models.Coin", "Coin")
                         .WithMany()
-                        .HasForeignKey("coinCode");
+                        .HasForeignKey("coin");
                 });
 
             modelBuilder.Entity("AgnusCrm.Web.Models.Item", b =>

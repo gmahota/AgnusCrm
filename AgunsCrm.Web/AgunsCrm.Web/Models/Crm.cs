@@ -70,8 +70,10 @@ namespace AgnusCrm.Web.Models
         [StringLength(3)]
         public string coin { get; set; }
 
-        [ForeignKey("coinCode")]
+        [ForeignKey("coin")]
         public Coin Coin { get; set; }
+
+        public virtual IList<Contact_Entity> listContact { get; set; }
     }
 
     public class Contact
@@ -79,14 +81,21 @@ namespace AgnusCrm.Web.Models
         [Key]
         public int id { get; set; }
 
-        [Display(Name ="Nome")]
-        [StringLength(100)]
+        [Display (Name ="Code")]
+        [StringLength(20)]
+        public string code { get; set; }
 
-        public string name { get; set; }
+        [Display(Name ="Nome Completo")]
+        [StringLength(100)]
+        public string fullName { get; set; }
 
         [Display(Name = "Primeiro Nome")]
         [StringLength(50)]
         public string firstName { get; set; }
+
+        [Display(Name = "Nome Do Meio")]
+        [StringLength(50)]
+        public string middleName { get; set; }
 
         [Display(Name = "Ultimo Nome")]
         [StringLength(50)]
@@ -117,7 +126,6 @@ namespace AgnusCrm.Web.Models
         public string telephone { get; set; }
 
         [Display(Name ="Utilizador")]
-        [StringLength(100)]
         public string userId { get; set; }
 
         [ForeignKey ("userId")]
@@ -135,8 +143,14 @@ namespace AgnusCrm.Web.Models
 
         public int entityId { get; set; }
 
+        [Display(Name = "Tipo")]
+        [StringLength(20)]
         public string type { get; set; }
+
+        [StringLength(20)]
         public string name { get; set; }
+
+        [StringLength(20)]
         public string value { get; set; }
 
         [ForeignKey("contactId")]

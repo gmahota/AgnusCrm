@@ -62,5 +62,11 @@ namespace AgnusCrm.Web.Data
         public DbSet<AgnusCrm.Web.Models.Item> Item { get; set; }
 
         public DbSet<AgnusCrm.Web.Models.Customer> Customer { get; set; }
+
+        public DbSet<AgnusCrm.Web.Models.Contact> Contact { get; set; }
+
+        public DbSet<AgnusCrm.Web.Models.Entity> Entity { get; set; }
+
+        public DbSet<AgnusCrm.Web.Models.Contact_Entity> Contact_Entity { get; set; }
     }
 }

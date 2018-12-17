@@ -13,6 +13,8 @@ using AgnusCrm.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AgnusCrm.Web.Services;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace AgnusCrm.Web
 {

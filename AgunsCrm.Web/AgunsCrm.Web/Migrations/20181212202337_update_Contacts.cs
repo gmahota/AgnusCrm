@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AgnusCrm.Web.Migrations
 {
-    public partial class update_Contact : Migration
+    public partial class update_Contacts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,8 @@ namespace AgnusCrm.Web.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -226,6 +227,36 @@ namespace AgnusCrm.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contact",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    code = table.Column<string>(maxLength: 20, nullable: true),
+                    fullName = table.Column<string>(maxLength: 100, nullable: true),
+                    firstName = table.Column<string>(maxLength: 50, nullable: true),
+                    middleName = table.Column<string>(maxLength: 50, nullable: true),
+                    lastName = table.Column<string>(maxLength: 50, nullable: true),
+                    title = table.Column<string>(maxLength: 10, nullable: true),
+                    email = table.Column<string>(maxLength: 50, nullable: true),
+                    emailAlt = table.Column<string>(maxLength: 50, nullable: true),
+                    type = table.Column<string>(maxLength: 20, nullable: true),
+                    cellPhone = table.Column<string>(maxLength: 20, nullable: true),
+                    telephone = table.Column<string>(maxLength: 20, nullable: true),
+                    userId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contact", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Contact_AspNetUsers_userId",
+                        column: x => x.userId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Entity",
                 columns: table => new
                 {
@@ -239,15 +270,14 @@ namespace AgnusCrm.Web.Migrations
                     contributing_Number = table.Column<string>(maxLength: 20, nullable: true),
                     country = table.Column<string>(maxLength: 20, nullable: true),
                     telphone = table.Column<string>(maxLength: 30, nullable: true),
-                    coin = table.Column<string>(maxLength: 3, nullable: true),
-                    coinCode = table.Column<string>(nullable: true)
+                    coin = table.Column<string>(maxLength: 3, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Entity", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Entity_Coin_coinCode",
-                        column: x => x.coinCode,
+                        name: "FK_Entity_Coin_coin",
+                        column: x => x.coin,
                         principalTable: "Coin",
                         principalColumn: "code",
                         onDelete: ReferentialAction.Restrict);
@@ -272,6 +302,35 @@ namespace AgnusCrm.Web.Migrations
                         principalTable: "Family",
                         principalColumn: "code",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contact_Entity",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    contactId = table.Column<int>(nullable: false),
+                    entityId = table.Column<int>(nullable: false),
+                    type = table.Column<string>(nullable: true),
+                    name = table.Column<string>(nullable: true),
+                    value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contact_Entity", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Contact_Entity_Contact_contactId",
+                        column: x => x.contactId,
+                        principalTable: "Contact",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Contact_Entity_Entity_entityId",
+                        column: x => x.entityId,
+                        principalTable: "Entity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -453,14 +512,29 @@ namespace AgnusCrm.Web.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Contact_userId",
+                table: "Contact",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contact_Entity_contactId",
+                table: "Contact_Entity",
+                column: "contactId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contact_Entity_entityId",
+                table: "Contact_Entity",
+                column: "entityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Customer_entityId",
                 table: "Customer",
                 column: "entityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Entity_coinCode",
+                name: "IX_Entity_coin",
                 table: "Entity",
-                column: "coinCode");
+                column: "coin");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Item_productId",
@@ -516,6 +590,9 @@ namespace AgnusCrm.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Contact_Entity");
+
+            migrationBuilder.DropTable(
                 name: "Customer");
 
             migrationBuilder.DropTable(
@@ -531,7 +608,7 @@ namespace AgnusCrm.Web.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Contact");
 
             migrationBuilder.DropTable(
                 name: "Entity");
@@ -541,6 +618,9 @@ namespace AgnusCrm.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "Unity");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Coin");
