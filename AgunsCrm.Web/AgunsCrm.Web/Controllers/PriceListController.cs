@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgnusCrm.Web.Data;
 using AgnusCrm.Web.Models;
+using AgnusCrm.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace AgnusCrm.Web.Controllers
 {
@@ -16,10 +18,16 @@ namespace AgnusCrm.Web.Controllers
     public class PriceListController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IEmailSender _emailSender;
+        private readonly ILogger _logger;
 
-        public PriceListController(ApplicationDbContext context)
+        public PriceListController(ApplicationDbContext context, 
+            IEmailSender emailSender,
+            ILogger<AccountController> logger)
         {
             _context = context;
+            _emailSender = emailSender;
+            _logger = logger;
         }
 
         [Route("")]
@@ -30,6 +38,8 @@ namespace AgnusCrm.Web.Controllers
         {
 
             ViewData["PriceType"] = "PVP1";
+
+            await _emailSender.SendEmailAsync("guimaraesmahota@gmail.com","OLA","Ola");
 
             if (!String.IsNullOrEmpty(searchString))
             {
