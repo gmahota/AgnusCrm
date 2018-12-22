@@ -6,6 +6,7 @@ using AgnusCrm.Web.Data;
 using AgnusCrm.Web.Models;
 using AgnusCrm.Web.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -39,8 +40,6 @@ namespace AgnusCrm.Web.Controllers
 
             ViewData["PriceType"] = "PVP1";
 
-            await _emailSender.SendEmailAsync("guimaraesmahota@gmail.com","OLA","Ola");
-
             if (!String.IsNullOrEmpty(searchString))
             {
                 var priceList = _context.Product
@@ -66,7 +65,6 @@ namespace AgnusCrm.Web.Controllers
                 return View(await priceList.ToListAsync());
             }
 
-            
         }
 
         // GET: View_PriceList/Details/5

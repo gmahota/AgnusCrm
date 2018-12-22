@@ -4,7 +4,25 @@
     <meta charset="utf-8" />
     <title></title>
 </head>
-<body>
+<body style="font-family:'Calibri','Verdana','Arial','Helvetica'" >
 
+    <p>
+        Segue a minha encomenda, aguardo a fatura e entrega.
+    </p>
+    
+    <table border='2' cellspacing='10' cellpadding='10' style="border-collapse:collapse">
+        <thead>
+            <tr width='100' valign='top' style="width:100pt;color:white;background:#1a52c6;padding:0cm 5.4pt 0cm 5.4pt">
+                <th>Produto</th>
+                <th>Descrição</th>
+                <th>Preço Unit.</th>
+                <th>Qnt.</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{linhas}}
+        </tbody>
+    </table>
 </body>
 </html>

@@ -6,6 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using AgnusCrm.Web.Helpers;
 using AgnusCrm.Web.Models;
 using AgnusCrm.Web.Data;
+using System.Text;
+using Microsoft.AspNetCore.Hosting;
+using AgnusCrm.Web.Services;
+using Microsoft.Extensions.Logging;
+using System.IO;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace AgnusCrm.Web.Controllers
 {
@@ -13,10 +20,20 @@ namespace AgnusCrm.Web.Controllers
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _env;
+        private readonly IEmailSender _emailSender;
+        private readonly ILogger _logger;
 
-        public CartController(ApplicationDbContext context)
+        public CartController(ApplicationDbContext context, 
+           IEmailSender emailSender,
+           ILoggerFactory loggerFactory,
+           IHostingEnvironment env)
         {
             _context = context;
+            _emailSender = emailSender;
+            _logger = loggerFactory.CreateLogger<AccountController>();
+
+            _env = env;
         }
 
         [Route("index")]
@@ -112,5 +129,50 @@ namespace AgnusCrm.Web.Controllers
             return new JsonResult(cart);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create()
+        {
+            string cliente ="";
+            
+            var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session,
+                "cart");
+
+            ViewBag.cart = cart;
+            ViewBag.total = cart.Sum(i => i.price * i.quantity);
+
+            string linhas = "";
+            
+            foreach (var item in cart)
+            {
+                item.Product = _context.Product.Single(p => p.id == item.productId);
+                linhas +=
+                    string.Format(
+                    @"<tr> 
+                        <td>{0}</td>
+                        <td>{1}</td>
+                        <td>{2}</td>
+                        <td>{3}</td>
+                        <td>{4}</td>
+                     </tr>", item.Product.code,item.Product.desc, Math.Round(item.price,2),
+                        item.quantity, Math.Round(item.price * item.quantity, 2));
+            }
+
+            var pathToFile = _env.ContentRootPath + Path.DirectorySeparatorChar.ToString()
+                            + "Templates"
+                            + Path.DirectorySeparatorChar.ToString()
+                            + "Email"
+                            + Path.DirectorySeparatorChar.ToString()
+                            + "PriceList.html";
+
+            //_emailSender.SendEmailInvoice(
+            //    string.Format("Price List/Encomenda - {0}",cliente) , 
+            //    user.e, 
+            //    pathToFile, 
+            //    linhas
+            // );
+
+            return RedirectToAction(nameof(Index),"PriceList");
+        }
     }
 }

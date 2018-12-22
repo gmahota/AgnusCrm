@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using AgnusCrm.Web.Services;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using AgnusCrm.Web.Models;
 
 namespace AgnusCrm.Web
 {
@@ -41,7 +43,7 @@ namespace AgnusCrm.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("AgnusCrmContext")));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
@@ -59,10 +61,11 @@ namespace AgnusCrm.Web
                 // Lockout settings
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 10;
-                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.AllowedForNewUsers = false;
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
             });
 
             services.ConfigureApplicationCookie(options =>

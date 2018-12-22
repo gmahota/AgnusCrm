@@ -120,11 +120,14 @@ namespace AgnusCrm.Web.Migrations
 
                     b.Property<int>("entityId");
 
-                    b.Property<string>("name");
+                    b.Property<string>("name")
+                        .HasMaxLength(20);
 
-                    b.Property<string>("type");
+                    b.Property<string>("type")
+                        .HasMaxLength(20);
 
-                    b.Property<string>("value");
+                    b.Property<string>("value")
+                        .HasMaxLength(20);
 
                     b.HasKey("id");
 
@@ -573,7 +576,7 @@ namespace AgnusCrm.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AgnusCrm.Web.Models.Entity", "entity")
-                        .WithMany()
+                        .WithMany("listContact")
                         .HasForeignKey("entityId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
