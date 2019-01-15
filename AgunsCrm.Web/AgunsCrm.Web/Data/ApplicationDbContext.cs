@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using AgnusCrm.Web.Models;
+using System.Threading.Tasks;
 
 namespace AgnusCrm.Web.Data
 {
@@ -12,7 +13,7 @@ namespace AgnusCrm.Web.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -21,14 +22,8 @@ namespace AgnusCrm.Web.Data
 
             builder.Entity<ProductPrice>()
                 .HasKey(a => new { a.product, a.coin, a.unity });
-
             
-
-            //builder.Entity<SubFamily>()
-            //    .HasKey(a => new { a.code, a.familyCode });
-
             #region GeneralSeed
-
             builder.Entity<Coin>().HasData(
                 new Coin { code = "MZN", desc = "Metical", decimalPlaces = 2, Symbol = "MT" },
                 new Coin { code = "USD", desc = "Dollar", decimalPlaces = 0, Symbol = "$" },
@@ -39,10 +34,11 @@ namespace AgnusCrm.Web.Data
             builder.Entity<Unity>().HasData(
                 new Unity { code = "UN", desc = "Unidades", round = 2 }
             );
-
+            
             #endregion
         }
         
+
         public DbSet<Product> Product { get; set; }
 
         public DbSet<Brand> Brand { get; set; }

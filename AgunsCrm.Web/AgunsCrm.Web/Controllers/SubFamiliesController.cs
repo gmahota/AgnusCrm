@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AgnusCrm.Web.Models;
 using AgnusCrm.Web.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AgnusCrm.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class SubFamiliesController : Controller
     {
         private readonly ApplicationDbContext _context;

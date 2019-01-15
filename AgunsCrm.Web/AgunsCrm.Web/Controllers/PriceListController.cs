@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 namespace AgnusCrm.Web.Controllers
 {
     [Authorize]
-    [Route("ListaPrecos")]
+    //[Route("ListaPrecos")]
     public class PriceListController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -31,10 +31,10 @@ namespace AgnusCrm.Web.Controllers
             _logger = logger;
         }
 
-        [Route("")]
-        [Route("index")]
-        [Route("~/")]
-        // GET: View_PriceList
+        //[Route("")]
+        //[Route("/ListaPrecos/index")]
+        //[Route("~/ListaPrecos/")]
+        //GET: View_PriceList
         public async Task<IActionResult> Index(string searchString)
         {
 

@@ -68,14 +68,15 @@ namespace AgnusCrm.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Status");
+
                     b.Property<string>("cellPhone")
                         .HasMaxLength(20);
 
                     b.Property<string>("code")
                         .HasMaxLength(20);
 
-                    b.Property<string>("email")
-                        .HasMaxLength(50);
+                    b.Property<string>("email");
 
                     b.Property<string>("emailAlt")
                         .HasMaxLength(50);

@@ -5,6 +5,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts {
+    
+    <script>
+        function removeUser(id) {
+            $("#userId").val('');
+        }
+
+        function addUser(id) {
+           $.ajax({
+                url: '/Account/CreateUser/' + id,
+                //type = 'GET',
+                //contentType = 'application/json; charset=utf-8',
+                //data: JSON.stringify(cart)
+            });
+            
+        }
+    </script>
+}
+
 <h2>Edit</h2>
 
 <h4>Contact</h4>
@@ -71,8 +90,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="userId" class="control-label"></label>
-                <select asp-for="userId" class="form-control" asp-items="ViewBag.userId"></select>
+                <select id="userId" asp-for="userId" class="form-control" asp-items="ViewBag.userId">
+                    <option disabled selected>--- SELECT ---</option>
+                </select>
                 <span asp-validation-for="userId" class="text-danger"></span>
+
+                <button class="btn btn-danger" onclick="javascript:removeUser(@Model.id)"> <span class="fa fa-remove"></span></button>
+                <a href="#" class="btn btn-success" onclick="javascript:addUser(@Model.id)"> <span class="fa fa-user-circle"></span></a>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewData["Title"] - AgnusCrm</title>
+
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link href="~/lib/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!-- Ionicons -->
+    <link href="~/lib/AdminLTE/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" />
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/lib/Adminlte/dist/css/AdminLTE.min.css">
+    <link href="~/lib/AdminLTE/dist/css/skins/_all-skins.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link href="~/lib/AdminLTE/plugins/iCheck/square/blue.css" rel="stylesheet" />
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+</head>
+<body class="hold-transition login-page">
+
+    @RenderBody()
+
+    <script src="~/lib/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/AdminLTE/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/lib/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+        });
+    </script>
+
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

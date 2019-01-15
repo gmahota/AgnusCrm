@@ -19,8 +19,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace AgnusCrm.Web.Controllers
 {
-    
-    [Authorize]
+
+    [Authorize(Roles = "Administrator")]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -215,12 +215,39 @@ namespace AgnusCrm.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<string> CreateUser(int id)
+        {
+            ApplicationUser user;
+            var contact = _context.Contact.First(c => c.id == id);
+
+            var users = _userManager.FindByIdAsync(contact.userId);
+
+            if (users == null)
+            {
+                user = new ApplicationUser { UserName = contact.email, Email = contact.email };
+                var result = await _userManager.CreateAsync(user);
+
+                contact.userId = user.Id;
+
+                _context.Contact.Update(contact);
+            }
+            else
+            {
+                user = users.Result; 
+            }
+
+            return  user.Id;
+        }
+
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+
+        
 
         [HttpPost]
         [AllowAnonymous]

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgnusCrm.Web.Data;
 using AgnusCrm.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgnusCrm.Controllers
 {
-    
+    [Authorize(Roles = "Administrator")]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;

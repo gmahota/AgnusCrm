@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>aspnet-AgunsCrm.Web-52ADE064-BB80-477F-AF13-E37F565966BC</UserSecretsId>
   </PropertyGroup>
 
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
   </ItemGroup>
@@ -24,6 +24,15 @@
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Templates\Email\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\sufee-admin\scss\style.scss" />
+    <None Include="wwwroot\sufee-admin\scss\_gauge.scss" />
+    <None Include="wwwroot\sufee-admin\scss\_socials.scss" />
+    <None Include="wwwroot\sufee-admin\scss\_switches.scss" />
+    <None Include="wwwroot\sufee-admin\scss\_variables.scss" />
+    <None Include="wwwroot\sufee-admin\scss\_widgets.scss" />
   </ItemGroup>
 
 </Project>

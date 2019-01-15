@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AgnusCrm.Web.Data;
 using AgnusCrm.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AgnusCrm.Web.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,10 +22,28 @@ namespace AgnusCrm.Web.Controllers
         }
 
         // GET: Contacts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string entities_SearchString)
         {
-            var applicationDbContext = _context.Contact.Include(c => c.ApplicationUser);
-            return View(await applicationDbContext.ToListAsync());
+            if (!String.IsNullOrEmpty(entities_SearchString))
+            {
+
+                var applicationDbContext = _context.Contact
+                    .Where(s => (s.code.Contains(entities_SearchString) ||
+                    s.firstName.Contains(entities_SearchString) ||
+                    s.fullName.Contains(entities_SearchString) ||
+                    s.email.Contains(entities_SearchString)
+                    ))
+                ;
+                return View(await applicationDbContext.ToListAsync());
+            }
+            else
+            {
+                var applicationDbContext = _context.Contact;
+                return View(await applicationDbContext.ToListAsync());
+            }
+
+            //var applicationDbContext = _context.Contact.Include(c => c.ApplicationUser);
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Contacts/Details/5
@@ -35,7 +55,7 @@ namespace AgnusCrm.Web.Controllers
             }
 
             var contact = await _context.Contact
-                .Include(c => c.ApplicationUser)
+        
                 .FirstOrDefaultAsync(m => m.id == id);
             if (contact == null)
             {
@@ -82,7 +102,7 @@ namespace AgnusCrm.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["userId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", contact.userId);
+            ViewData["userId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "UserName", contact.userId);
             return View(contact);
         }
 
@@ -131,7 +151,7 @@ namespace AgnusCrm.Web.Controllers
             }
 
             var contact = await _context.Contact
-                .Include(c => c.ApplicationUser)
+
                 .FirstOrDefaultAsync(m => m.id == id);
             if (contact == null)
             {

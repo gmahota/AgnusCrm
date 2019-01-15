@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AgnusCrm.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class EntitiesController : Controller
     {
         private readonly ApplicationDbContext _context;

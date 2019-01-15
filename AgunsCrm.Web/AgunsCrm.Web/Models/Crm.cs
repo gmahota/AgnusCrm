@@ -106,7 +106,7 @@ namespace AgnusCrm.Web.Models
         public string title { get; set; }
 
         [Display(Name = "Email")]
-        [StringLength(50)]
+        [DataType(DataType.EmailAddress)]
         public string email { get; set; }
 
         [Display(Name = "Email Alternativo")]
@@ -128,10 +128,19 @@ namespace AgnusCrm.Web.Models
         [Display(Name ="Utilizador")]
         public string userId { get; set; }
 
-        [ForeignKey ("userId")]
+        public ContactStatus Status { get; set; }
+
+        [ForeignKey("userId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public List<Contact_Entity> contact_Itens { get; set; }
+    }
+
+    public enum ContactStatus
+    {
+        Submitted,
+        Approved,
+        Rejected
     }
 
     public class Contact_Entity
