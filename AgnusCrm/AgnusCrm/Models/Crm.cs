@@ -130,9 +130,6 @@ namespace AgnusCrm.Models
 
         public ContactStatus Status { get; set; }
 
-        [ForeignKey("userId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
-
         public List<Contact_Entity> contact_Itens { get; set; }
     }
 
