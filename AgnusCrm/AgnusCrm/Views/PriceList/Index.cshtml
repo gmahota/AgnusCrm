@@ -1,0 +1,84 @@
+﻿@model IEnumerable<AgnusCrm.Models.View_PriceList>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.marca_Desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.familia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.familia_Desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.subFamilia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.subFamilia_Desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.artigo_Desc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.stock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.marca_Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.familia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.familia_Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subFamilia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subFamilia_Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.artigo_Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stock)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.artigo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.artigo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.artigo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

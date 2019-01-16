@@ -1,0 +1,95 @@
+﻿@model IEnumerable<AgnusCrm.Web.Models.Item>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    <script>
+        $(document).on('click', '.removebutton', function () { // <-- changes
+            var produto = $(this).prop('id');
+
+            var cart = { "id": produto };
+
+            $.ajax({
+                url: '/Cart/RemoveItem/' + cart.id,
+                //type = 'GET',
+                //contentType = 'application/json; charset=utf-8',
+                //data: JSON.stringify(cart)
+            });
+
+            $(this).closest('tr').remove();
+            return false;
+        });
+    </script>
+}
+
+<h2>Order / Encomenda</h2>
+
+<form asp-controller="Cart" asp-action="Create">
+    <p>
+        <a class="btn btn-info" asp-controller="PriceList" asp-action="index">
+            <i class="fa fa-plus-circle left"></i>
+            Produtos
+        </a>
+
+        <button class="btn btn-primary">
+            <i class="fa fa-check-circle left"></i>  
+            Terminar 
+        </button>
+    </p>
+</form>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.desc)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.price)
+                </th>
+
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.code)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.desc)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.quantity)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.price)
+                    </td>
+
+
+                    <td>
+                        <button id="@item.productId" class="removebutton btn btn-danger" type="button" value="Remove">
+                            <i class="fa fa-cart-arrow-down left"></i>
+                            Remover
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

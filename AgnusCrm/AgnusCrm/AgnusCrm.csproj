@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Brands\bin\**" />
     <Compile Remove="wwwroot\lib\AdminLTE\bower_components\fullcalendar\**" />
+    <Content Remove="Views\Brands\bin\**" />
     <Content Remove="wwwroot\lib\AdminLTE\bower_components\fullcalendar\**" />
+    <EmbeddedResource Remove="Views\Brands\bin\**" />
     <EmbeddedResource Remove="wwwroot\lib\AdminLTE\bower_components\fullcalendar\**" />
+    <None Remove="Views\Brands\bin\**" />
     <None Remove="wwwroot\lib\AdminLTE\bower_components\fullcalendar\**" />
   </ItemGroup>
 
