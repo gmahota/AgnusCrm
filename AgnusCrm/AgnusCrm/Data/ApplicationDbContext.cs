@@ -64,4 +64,5 @@ namespace AgnusCrm.Data
         public DbSet<Contact_Entity> Contact_Entity { get; set; }
 
     }
+
 }

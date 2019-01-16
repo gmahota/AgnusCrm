@@ -19,11 +19,10 @@ namespace AgnusCrm.Controllers
         private readonly ApplicationDbContext _context;
         private IHostingEnvironment _env;
         private readonly IEmailSender _emailSender;
-        private readonly ILogger _logger;
+      
 
         public CartController(ApplicationDbContext context,
            IEmailSender emailSender,
-           ILoggerFactory loggerFactory,
            IHostingEnvironment env)
         {
             _context = context;

@@ -1,84 +1,348 @@
-﻿@model IEnumerable<AgnusCrm.Models.View_PriceList>
+﻿@model IEnumerable<AgnusCrm.Models.Product>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+@section Scripts {
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.marca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.marca_Desc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.familia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.familia_Desc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.subFamilia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.subFamilia_Desc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.artigo_Desc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.preco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.stock)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.marca)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.marca_Desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.familia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.familia_Desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.subFamilia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.subFamilia_Desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.artigo_Desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.preco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.stock)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.artigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.artigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.artigo">Delete</a>
-            </td>
-        </tr>
+
+
+    <script language=javascript type='text/javascript'>
+        $(document).ready(function () {
+            $('#example1').DataTable();
+
+            $(".Enc").change(function () {
+
+                var selectedEnc = $(this).val();
+
+                var qnt = $(this).val();
+
+                var produto = $(this).prop('id');
+
+                console.log($("#Price_" + produto));
+                var price = $("#Price_" + produto).prop('innerHTML').replace('.', '').replace(',', '.');
+
+                console.log(price);
+                var cart = { "id": produto, "qnt": qnt, "price": price };
+
+                $.ajax({
+                    url: '/Cart/AddItem/' + cart.id + '?' + "quantity=" + cart.qnt + "&" + "price=" + cart.price,
+                    //type = 'GET',
+                    //contentType = 'application/json; charset=utf-8',
+                    //data: JSON.stringify(cart)
+                });
+
+            });
+        });
+
+    </script>
+
+    <script>
+        function fazEncomenda(id) {
+            var sel = $("#Sel_" + id).is(':checked') ? 1 : 0;
+
+            if (sel == 1) {
+                $("#" + id).prop('disabled', false);
+            } else {
+                $("#" + id).prop('disabled', true);
+                $("#" + id).val(0);
+
+                var produto = $("#" + id).prop('id');
+
+                var cart = { "id": produto };
+
+                $.ajax({
+                    url: '/Cart/RemoveItem/' + cart.id,
+                    //type = 'GET',
+                    //contentType = 'application/json; charset=utf-8',
+                    //data: JSON.stringify(cart)
+                });
+
+            }
+
+
+        }
+    </script>
 }
-    </tbody>
-</table>
+
+
+<section class="content-header">
+    <h1>
+        Price List | Encomenda
+        <small>Artigos de Informatica</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Price List</li>
+    </ol>
+</section>
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Price List</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+
+        <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+            <thead>
+                <tr role="row">
+                    <th>
+                        Sel.
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Brand.description)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Family.description)
+                    </th>
+                    <th >
+                        @Html.DisplayNameFor(model => model.SubFamily.description)
+                    </th>
+
+                    <th >
+                        @Html.DisplayNameFor(model => model.desc)
+                    </th>
+                    <th >
+                        @Html.DisplayNameFor(model => model.price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.stock)
+                    </th>
+                    <th >
+                        Encomenda
+
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="Sel_@item.id" value="false" onclick="javascript:fazEncomenda(@item.id)" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Brand.description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Family.description)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubFamily.description)
+                        </td>
+                        <td class="sorting_1">
+                            @Html.DisplayFor(modelItem => item.desc)
+                        </td>
+                        <td>
+
+                            @{
+                                string priceType = ViewData["PriceType"].ToString();
+                                switch (priceType)
+                                {
+                                    case "PVP1":
+                                        <span id="Price_@item.id">
+                                            @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp1)
+                                        </span>
+                                        break;
+                                    case "PVP2":
+                                        <span id="Price_@item.id">
+                                            @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp2)
+                                        </span>
+                                        break;
+                                    case "PVP3":
+                                        <span id="Price_@item.id">
+                                            @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp3)
+                                        </span>
+                                        break;
+                                    case "PVP4":
+                                        <span id="Price_@item.id">
+                                            @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp4)
+                                        </span>
+                                        break;
+                                    case "PVP5":
+                                        <span id="Price_@item.id">
+                                            @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp5)
+                                        </span>
+                                        break;
+                                    case "PVP6":
+                                        <span id="Price_@item.id">
+                                            @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp6)
+                                        </span>
+                                        break;
+                                }
+
+                            }
+
+
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.stock)
+                        </td>
+                        <td>
+                            <input type="number" class="Enc" id="@item.id" min="0" max="@item.stock" step="1" value="0" disabled="disabled" />
+                        </td>
+                        @*<td>
+                                <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                            </td>*@
+                    </tr>
+                }
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Sel.</th>
+                    <th >@Html.DisplayNameFor(model => model.Brand.description)</th>
+                    <th>@Html.DisplayNameFor(model => model.Family.description)</th>
+                    <th>@Html.DisplayNameFor(model => model.SubFamily.description)</th>
+                    <th>@Html.DisplayNameFor(model => model.desc)</th>
+                    <th >@Html.DisplayNameFor(model => model.price)</th>
+                    <th>@Html.DisplayNameFor(model => model.stock)</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+           
+<div class="content mt-3">
+
+    <div class="card">
+
+        <div class="card-header">
+            <form asp-controller="PriceList" asp-action="Index">
+
+                Artigo: <input type="text" name="SearchString">
+                <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                <a asp-controller="Cart" asp-action="Index" class="btn btn-success">
+                    <i class="fa fa-shopping-cart"></i>
+                </a>
+            </form>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-responsive-sm table-hover table-outline mb-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th>
+                            Sel.
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Brand.description)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Family.description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SubFamily.description)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.desc)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.stock)
+                        </th>
+                        <th>
+                            Encomenda
+
+                        </th>
+
+                        @*<th></th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <input type="checkbox" id="Sel_@item.id" value="false" onclick="javascript:fazEncomenda(@item.id)" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Brand.description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Family.description)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SubFamily.description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.desc)
+                            </td>
+                            <td>
+
+                                @{
+                                    string priceType = ViewData["PriceType"].ToString();
+                                    switch (priceType)
+                                    {
+                                        case "PVP1":
+                                            <span id="Price_@item.id">
+                                                @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp1)
+                                            </span>
+                                            break;
+                                        case "PVP2":
+                                            <span id="Price_@item.id">
+                                                @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp2)
+                                            </span>
+                                            break;
+                                        case "PVP3":
+                                            <span id="Price_@item.id">
+                                                @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp3)
+                                            </span>
+                                            break;
+                                        case "PVP4":
+                                            <span id="Price_@item.id">
+                                                @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp4)
+                                            </span>
+                                            break;
+                                        case "PVP5":
+                                            <span id="Price_@item.id">
+                                                @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp5)
+                                            </span>
+                                            break;
+                                        case "PVP6":
+                                            <span id="Price_@item.id">
+                                                @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp6)
+                                            </span>
+                                            break;
+                                    }
+
+                                }
+
+
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.stock)
+                            </td>
+                            <td>
+                                <input type="number" class="Enc" id="@item.id" min="0" max="@item.stock" step="1" value="0" disabled="disabled" />
+                            </td>
+                            @*<td>
+                                    <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                                </td>*@
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+

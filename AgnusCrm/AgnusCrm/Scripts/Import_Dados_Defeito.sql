@@ -57,10 +57,22 @@ select id,1 from Entity where id not in (select entityId from Customer)
 go
 
 insert into Contact
-
+([code]
+           ,[fullName]
+           ,[firstName]
+           ,[middleName]
+           ,[lastName]
+           ,[title]
+           ,[email]
+           ,[emailAlt]
+           ,[type]
+           ,[cellPhone]
+           ,[telephone]
+           ,[userId]
+           ,[Status])
 select Contacto,left(Co.PrimeiroNome,50) + ' '+ left(co.UltimoNome,49),left(Co.PrimeiroNome,50),
 	left(co.NomesIntermedios,50) ,left(co.UltimoNome,50),co.Titulo,
-	left(co.Email,50),left(co.EmailAssist,50),'Cliente',co.Telemovel,co.Telefone,null from PRICOMPUWORKS.dbo.Contactos Co
+	left(co.Email,50),left(co.EmailAssist,50),'Cliente',co.Telemovel,co.Telefone,null,0 from PRICOMPUWORKS.dbo.Contactos Co
 
 go
 

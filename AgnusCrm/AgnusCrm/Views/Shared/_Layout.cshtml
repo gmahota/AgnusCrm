@@ -11,11 +11,20 @@
     <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <!-- Ionicons -->
     <link href="~/lib/AdminLTE/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" />
-    
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/lib/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
     <!-- Theme style -->
     <link rel="stylesheet" href="~/lib/Adminlte/dist/css/AdminLTE.min.css">
     <link href="~/lib/AdminLTE/dist/css/skins/_all-skins.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/main.css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -36,13 +45,13 @@
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <partial name="_LoginPartial" />
-                
+
             </div>
         </nav>
     </header>
 
     <partial name="_SideBar" />
-    
+
     @*<header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container">
@@ -96,20 +105,29 @@
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
     </environment>
+
+    <!-- DataTables -->
+    <script src="~/lib/AdminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/AdminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="~/lib/AdminLTE/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/lib/AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
+
     <script src="~/lib/AdminLTE/dist/js/adminlte.js"></script>
     <script>
         var AdminLTEOptions = {
-          //Enable sidebar expand on hover effect for sidebar mini
-          //This option is forced to true if both the fixed layout and sidebar mini
-          //are used together
-          sidebarExpandOnHover: true,
-          //BoxRefresh Plugin
-          enableBoxRefresh: true,
-          //Bootstrap.js tooltip
-          enableBSToppltip: true
+            //Enable sidebar expand on hover effect for sidebar mini
+            //This option is forced to true if both the fixed layout and sidebar mini
+            //are used together
+            sidebarExpandOnHover: true,
+            //BoxRefresh Plugin
+            enableBoxRefresh: true,
+            //Bootstrap.js tooltip
+            enableBSToppltip: true
         };
     </script>
-    
+
 
     <script src="~/js/site.js" asp-append-version="true"></script>
 

@@ -20,9 +20,36 @@ namespace AgnusCrm.Controllers
         }
 
         // GET: PriceList
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.View_PriceList.ToListAsync());
+
+            ViewData["PriceType"] = "PVP1";
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var priceList = _context.Product
+                    .Include(p => p.Brand)
+                    .Include(p => p.Family)
+                    .Include(p => p.SubFamily)
+                    .Include(p => p.ProductPrice)
+                    .Where(s => (s.code.Contains(searchString) ||
+                    s.desc.Contains(searchString)) && s.stock > 0);
+
+                return View(await priceList.ToListAsync());
+
+            }
+            else
+            {
+                var priceList = _context.Product
+                    .Include(p => p.Brand)
+                    .Include(p => p.Family)
+                    .Include(p => p.SubFamily)
+                    .Include(p => p.ProductPrice)
+                    .Where(s => s.stock > 0);
+
+                return View(await priceList.ToListAsync());
+            }
+
         }
 
         // GET: PriceList/Details/5
