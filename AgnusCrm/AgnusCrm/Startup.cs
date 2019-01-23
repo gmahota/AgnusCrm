@@ -47,7 +47,19 @@ namespace AgnusCrm
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // Add custom role services
+            services.AddTransient<IRoles, Roles>();
+
+            // Get SendGrid configuration options
+            services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
+
+            // Get SMTP configuration options
+            services.Configure<SmtpOptions>(Configuration.GetSection("SmtpOptions"));
+
+            // Get Super Admin Default options
+            services.Configure<SuperAdminDefaultOptions>(Configuration.GetSection("SuperAdminDefaultOptions"));
+
+            services.AddMvc();
 
             services.AddSession();
         }

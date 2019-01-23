@@ -35,9 +35,7 @@ namespace AgnusCrm.Models
         Promotion,
         Inactive
     }
-
     
-
     public partial class Product
     {
         [Key]
@@ -178,7 +176,7 @@ namespace AgnusCrm.Models
         public string code { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Descrição")]
+        [Display(Name = "Descrição (Familias)")]
         public string description { get; set; }
 
         public virtual List<Product> listProducts { get; set; }
@@ -192,11 +190,11 @@ namespace AgnusCrm.Models
         [Display(Name = "Id")]
         public int id { get; set; }
 
-        [Display(Name = "Sub-Famila")]
+        [Display(Name = "Sub-Familia")]
         [StringLength(20)]
         public string code { get; set; }
 
-        [Display(Name = "Descrição")]
+        [Display(Name = "Descrição (Sub-Famila)")]
         [StringLength(50)]
         public string description { get; set; }
 
@@ -215,7 +213,7 @@ namespace AgnusCrm.Models
         [Display(Name = "Marca")]
         public string code { get; set; }
 
-        [Display(Name = "Descrição")]
+        [Display(Name = "Descrição (Marca)")]
         [StringLength(50)]
         public string description { get; set; }
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AgnusCrm.Data;
 using AgnusCrm.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace AgnusCrm.Controllers
 {
@@ -20,10 +21,15 @@ namespace AgnusCrm.Controllers
         }
 
         // GET: PriceList
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index()
         {
-
+            var searchString = "camera";
             ViewData["PriceType"] = "PVP1";
+
+            ViewData["Family"] = new SelectList(_context.Family, "code", "description");
+            ViewData["SubFamily"] = new SelectList(_context.SubFamily, "code", "description");
+            ViewData["Brand"] = new SelectList(_context.Brand, "code", "description");
+
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -52,6 +58,45 @@ namespace AgnusCrm.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(string searchString, IFormCollection form)
+        {
+
+            ViewData["PriceType"] = "PVP1";
+
+            ViewData["Family"] = new SelectList(_context.Family, "code", "description");
+            ViewData["SubFamily"] = new SelectList(_context.SubFamily, "code", "description");
+            ViewData["Brand"] = new SelectList(_context.Brand, "code", "description");
+
+           
+
+            searchString = "camera";
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var priceList = _context.Product
+                    .Include(p => p.Brand)
+                    .Include(p => p.Family)
+                    .Include(p => p.SubFamily)
+                    .Include(p => p.ProductPrice)
+                    .Where(s => (s.code.Contains(searchString) ||
+                    s.desc.Contains(searchString)) && s.stock > 0);
+
+                return View(await priceList.ToListAsync());
+
+            }
+            else
+            {
+                var priceList = _context.Product
+                    .Include(p => p.Brand)
+                    .Include(p => p.Family)
+                    .Include(p => p.SubFamily)
+                    .Include(p => p.ProductPrice)
+                    .Where(s => s.stock > 0);
+
+                return View(await priceList.ToListAsync());
+            }
+
+        }
         // GET: PriceList/Details/5
         public async Task<IActionResult> Details(string id)
         {

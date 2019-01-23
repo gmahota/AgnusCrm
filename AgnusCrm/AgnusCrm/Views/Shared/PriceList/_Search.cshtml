@@ -1,0 +1,63 @@
+﻿@section Scripts {
+    
+}
+
+<div class="row">
+    <!-- right col -->
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Pesquisa por Produtos</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form id="submitButton" asp-controller="PriceList" asp-action="Index" method="post">
+            
+            <div class="box-body">
+                
+                <div class="col-md-4">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>Marca</label>
+                        <select id="listBrand" asp-items="ViewBag.Brand" class="form-control select2 select2-hidden-accessible"
+                                multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <label>Familia</label>
+                        <select id="listFamily" asp-items="ViewBag.Family" class="form-control select2 select2-hidden-accessible"
+                                multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <label>Sub-Familia</label>
+                        <select id="listSubFamily" asp-items="ViewBag.SubFamily" class="form-control select2 select2-hidden-accessible"
+                                multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true"></select>
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">
+                    <span class="fa fa-search"></span>
+                    Pesquisar
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
