@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AgnusCrm.Data;
 using AgnusCrm.Models;
 using Microsoft.AspNetCore.Http;
+using AgnusCrm.Models.PriceList;
 
 namespace AgnusCrm.Controllers
 {
@@ -59,7 +60,9 @@ namespace AgnusCrm.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string searchString, IFormCollection form)
+        public async Task<IActionResult> Index(string searchString,
+            [Bind("listBrand,listFamily,listSubFamily")] ViewSearchPriceList price,
+            IFormCollection form)
         {
 
             ViewData["PriceType"] = "PVP1";
@@ -68,34 +71,61 @@ namespace AgnusCrm.Controllers
             ViewData["SubFamily"] = new SelectList(_context.SubFamily, "code", "description");
             ViewData["Brand"] = new SelectList(_context.Brand, "code", "description");
 
-           
+            string filtroBrand = "";
+            string filtroFamily = "";
+            string filtroSubFamily = "";
 
-            searchString = "camera";
-            if (!String.IsNullOrEmpty(searchString))
+            if (price.listBrand != null)
             {
-                var priceList = _context.Product
-                    .Include(p => p.Brand)
-                    .Include(p => p.Family)
-                    .Include(p => p.SubFamily)
-                    .Include(p => p.ProductPrice)
-                    .Where(s => (s.code.Contains(searchString) ||
-                    s.desc.Contains(searchString)) && s.stock > 0);
+                filtroBrand = "";
 
-                return View(await priceList.ToListAsync());
+                foreach (var item in price.listBrand)
+                {
+                    filtroBrand += filtroBrand.Length == 0 ? "'" + item + "'" : ",'" + item + "'";
+                }
 
-            }
-            else
-            {
-                var priceList = _context.Product
-                    .Include(p => p.Brand)
-                    .Include(p => p.Family)
-                    .Include(p => p.SubFamily)
-                    .Include(p => p.ProductPrice)
-                    .Where(s => s.stock > 0);
-
-                return View(await priceList.ToListAsync());
+                filtroBrand = "and B.code in (" + filtroBrand + ") ";
             }
 
+            if (price.listFamily != null)
+            {
+                filtroFamily = "";
+
+                foreach (var item in price.listFamily)
+                {
+                    filtroFamily += filtroFamily.Length == 0 ? "'" + item + "'" : ",'" + item + "'";
+                }
+
+                filtroFamily = "and F.code in (" + filtroFamily + ") ";
+            }
+
+            if (price.listSubFamily != null)
+            {
+                filtroSubFamily = "";
+
+                foreach (var item in price.listSubFamily)
+                {
+                    filtroSubFamily += filtroSubFamily.Length == 0 ? "'" + item + "'" : ",'" + item + "'";
+                }
+
+                filtroSubFamily = "and SF.Code in (" + filtroSubFamily + ") ";
+            }
+
+            string sql = string.Format( @"select P.id, isnull(b.description,'') as brand_desc, isnull(f.description,'') as family_desc, 
+	            isnull(sf.description,'') as subFamily_desc, p.[desc],p.stock,pp.pvp1 as price, CONVERT(Bit,0) as encomenda
+                from dbo.Product P
+                inner join dbo.Family F on F.code = p.familycode {0}
+                inner join dbo.SubFamily SF on SF.id = p.subFamilyCode {1}
+                inner join dbo.Brand B on B.code = p.brandCode {2}
+                inner join dbo.ProductPrice pp on pp.product = p.id
+                where p.stock > 0"
+                , filtroFamily,filtroSubFamily,filtroBrand
+            );
+
+            var priceList = _context.ViewPriceList.FromSql(sql);
+
+            return View(await priceList.ToListAsync());
+            
         }
         // GET: PriceList/Details/5
         public async Task<IActionResult> Details(string id)

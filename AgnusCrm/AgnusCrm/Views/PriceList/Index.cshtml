@@ -1,9 +1,10 @@
-﻿@model IEnumerable<AgnusCrm.Models.Product>
+﻿@model IEnumerable<AgnusCrm.Models.PriceList.ViewPriceList>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 @section Scripts {
 
@@ -78,7 +79,9 @@
 </section>
 <section class="content">
 
-    <partial name="PriceList/_Search" />
+    @await Html.PartialAsync("PriceList/_Search",new AgnusCrm.Models.PriceList.ViewSearchPriceList { })
+
+    @*<partial name="PriceList/_Search" />*@
 
     <div class="row">
         <section class="content">
@@ -97,14 +100,14 @@
                                 </th>
 
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Brand.description)
+                                    @Html.DisplayNameFor(model => model.brand_desc)
                                 </th>
 
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Family.description)
+                                    @Html.DisplayNameFor(model => model.family_desc)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.SubFamily.description)
+                                    @Html.DisplayNameFor(model => model.subFamily_desc)
                                 </th>
 
                                 <th>
@@ -117,7 +120,7 @@
                                     @Html.DisplayNameFor(model => model.stock)
                                 </th>
                                 <th>
-                                    Encomenda
+                                    @Html.DisplayNameFor(model => model.encomenda)
 
                                 </th>
 
@@ -131,60 +134,21 @@
                                         <input type="checkbox" id="Sel_@item.id" value="false" onclick="javascript:fazEncomenda(@item.id)" />
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Brand.description)
+                                        @Html.DisplayFor(modelItem => item.brand_desc)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Family.description)
+                                        @Html.DisplayFor(modelItem => item.family_desc)
                                     </td>
 
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.SubFamily.description)
+                                        @Html.DisplayFor(modelItem => item.subFamily_desc)
                                     </td>
                                     <td class="sorting_1">
                                         @Html.DisplayFor(modelItem => item.desc)
                                     </td>
                                     <td>
-
-                                        @{
-                                            string priceType = ViewData["PriceType"].ToString();
-                                            switch (priceType)
-                                            {
-                                                case "PVP1":
-                                                    <span id="Price_@item.id">
-                                                        @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp1)
-                                                    </span>
-                                                    break;
-                                                case "PVP2":
-                                                    <span id="Price_@item.id">
-                                                        @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp2)
-                                                    </span>
-                                                    break;
-                                                case "PVP3":
-                                                    <span id="Price_@item.id">
-                                                        @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp3)
-                                                    </span>
-                                                    break;
-                                                case "PVP4":
-                                                    <span id="Price_@item.id">
-                                                        @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp4)
-                                                    </span>
-                                                    break;
-                                                case "PVP5":
-                                                    <span id="Price_@item.id">
-                                                        @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp5)
-                                                    </span>
-                                                    break;
-                                                case "PVP6":
-                                                    <span id="Price_@item.id">
-                                                        @Html.DisplayFor(modelItem => item.ProductPrice[0].pvp6)
-                                                    </span>
-                                                    break;
-                                            }
-
-                                        }
-
-
-
+                                        @Html.DisplayFor(modelItem => item.price)
+                                        
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.stock)
@@ -193,8 +157,8 @@
                                         <input type="number" class="Enc" id="@item.id" min="0" max="@item.stock" step="1" value="0" disabled="disabled" />
                                     </td>
                                     @*<td>
-                                        <a asp-action="Details" asp-route-id="@item.id">Details</a>
-                                    </td>*@
+                                            <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                                        </td>*@
                                 </tr>
                             }
 
@@ -202,9 +166,9 @@
                         <tfoot>
                             <tr>
                                 <th>Sel.</th>
-                                <th>@Html.DisplayNameFor(model => model.Brand.description)</th>
-                                <th>@Html.DisplayNameFor(model => model.Family.description)</th>
-                                <th>@Html.DisplayNameFor(model => model.SubFamily.description)</th>
+                                <th>@Html.DisplayNameFor(model => model.brand_desc)</th>
+                                <th>@Html.DisplayNameFor(model => model.family_desc)</th>
+                                <th>@Html.DisplayNameFor(model => model.subFamily_desc)</th>
                                 <th>@Html.DisplayNameFor(model => model.desc)</th>
                                 <th>@Html.DisplayNameFor(model => model.price)</th>
                                 <th>@Html.DisplayNameFor(model => model.stock)</th>
@@ -217,6 +181,6 @@
     </div>
 </section>
 
-           
+
 
 

@@ -1,5 +1,7 @@
-﻿@section Scripts {
-    
+﻿@model AgnusCrm.Models.PriceList.ViewSearchPriceList
+
+@section Scripts {
+
 }
 
 <div class="row">
@@ -18,14 +20,14 @@
         <!-- /.box-header -->
         <!-- form start -->
         <form id="submitButton" asp-controller="PriceList" asp-action="Index" method="post">
-            
+
             <div class="box-body">
-                
+
                 <div class="col-md-4">
                     <!-- /.form-group -->
                     <div class="form-group">
                         <label>Marca</label>
-                        <select id="listBrand" asp-items="ViewBag.Brand" class="form-control select2 select2-hidden-accessible"
+                        <select id="listBrand" asp-for="listBrand" asp-items="ViewBag.Brand" class="form-control select2 select2-hidden-accessible"
                                 multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true"></select>
                     </div>
                 </div>
@@ -34,7 +36,7 @@
                     <div class="form-group">
 
                         <label>Familia</label>
-                        <select id="listFamily" asp-items="ViewBag.Family" class="form-control select2 select2-hidden-accessible"
+                        <select id="listFamily" asp-for="listFamily" asp-items="ViewBag.Family" class="form-control select2 select2-hidden-accessible"
                                 multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true"></select>
                     </div>
                 </div>
@@ -43,13 +45,13 @@
                     <div class="form-group">
 
                         <label>Sub-Familia</label>
-                        <select id="listSubFamily" asp-items="ViewBag.SubFamily" class="form-control select2 select2-hidden-accessible"
+                        <select id="listSubFamily" asp-for="listSubFamily" asp-items="ViewBag.SubFamily" class="form-control select2 select2-hidden-accessible"
                                 multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true"></select>
 
                     </div>
                 </div>
             </div>
-            
+
             <!-- /.box-body -->
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">

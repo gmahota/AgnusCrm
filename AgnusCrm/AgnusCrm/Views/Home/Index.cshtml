@@ -81,7 +81,9 @@
     </div>
     <!-- /.row -->
 
-    <partial name="PriceList/_Search" />
+    @await Html.PartialAsync("PriceList/_Search", new AgnusCrm.Models.PriceList.ViewSearchPriceList { })
+
+    @*<partial name="PriceList/_Search" />*@
 
     <!-- Main row -->
     <div class="row">

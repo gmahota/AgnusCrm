@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AgnusCrm.Models;
+using AgnusCrm.Models.PriceList;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -63,5 +64,6 @@ namespace AgnusCrm.Data
 
         public DbSet<Contact_Entity> Contact_Entity { get; set; }
 
+        public DbSet<ViewPriceList> ViewPriceList { get; set; }
     }
 }
