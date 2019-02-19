@@ -15,7 +15,17 @@ namespace AgnusCrm.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                //services.AddDbContext<ApplicationDbContext>(options =>
+                //    options.UseSqlServer(
+                //        context.Configuration.GetConnectionString("AgnusCrmContext")));
+
+                //services.AddDefaultIdentity<IdentityUser>(config =>
+                //{
+                //    config.SignIn.RequireConfirmedEmail = true;
+                //})
+                //    .AddEntityFrameworkStores<ApplicationDbContext>();
             });
+            
         }
     }
 }

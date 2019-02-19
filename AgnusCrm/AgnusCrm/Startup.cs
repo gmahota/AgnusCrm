@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using AgnusCrm.Services;
+using AgnusCrm.Models;
 
 namespace AgnusCrm
 {
@@ -40,21 +41,93 @@ namespace AgnusCrm
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("AgnusCrmContext")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddDefaultUI(UIFramework.Bootstrap4)
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    // Password settings.
+            //    options.Password.RequireDigit = true;
+            //    options.Password.RequireLowercase = true;
+            //    options.Password.RequireNonAlphanumeric = true;
+            //    options.Password.RequireUppercase = true;
+            //    options.Password.RequiredLength = 6;
+            //    options.Password.RequiredUniqueChars = 1;
+
+            //    // Lockout settings.
+            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            //    options.Lockout.MaxFailedAccessAttempts = 5;
+            //    options.Lockout.AllowedForNewUsers = true;
+
+            //    // User settings.
+            //    options.User.AllowedUserNameCharacters =
+            //    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            //    options.User.RequireUniqueEmail = false;
+            //});
+
+
+            //// Get Identity Default Options
+            IConfigurationSection identityDefaultOptionsConfigurationSection = Configuration.GetSection("IdentityDefaultOptions");
+
+           services.Configure<IdentityDefaultOptions>(identityDefaultOptionsConfigurationSection);
+
+            var identityDefaultOptions = identityDefaultOptionsConfigurationSection.Get<IdentityDefaultOptions>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = identityDefaultOptions.PasswordRequireDigit;
+                options.Password.RequiredLength = identityDefaultOptions.PasswordRequiredLength;
+                options.Password.RequireNonAlphanumeric = identityDefaultOptions.PasswordRequireNonAlphanumeric;
+                options.Password.RequireUppercase = identityDefaultOptions.PasswordRequireUppercase;
+                options.Password.RequireLowercase = identityDefaultOptions.PasswordRequireLowercase;
+                options.Password.RequiredUniqueChars = identityDefaultOptions.PasswordRequiredUniqueChars;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(identityDefaultOptions.LockoutDefaultLockoutTimeSpanInMinutes);
+                options.Lockout.MaxFailedAccessAttempts = identityDefaultOptions.LockoutMaxFailedAccessAttempts;
+                options.Lockout.AllowedForNewUsers = identityDefaultOptions.LockoutAllowedForNewUsers;
+
+                // User settings
+                options.User.RequireUniqueEmail = identityDefaultOptions.UserRequireUniqueEmail;
+
+                // email confirmation require
+                options.SignIn.RequireConfirmedEmail = identityDefaultOptions.SignInRequireConfirmedEmail;
+            }).AddDefaultUI(UIFramework.Bootstrap4)
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+            // Add custom role services
+            services.AddTransient<IRoles, Roles>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            // Add custom role services
-            services.AddTransient<IRoles, Roles>();
+            //services.AddSingleton<IEmailSender, EmailSender>();
+
+            // Add DI for Dotnetdesk
+            services.AddTransient<INetcoreService, NetcoreService>();
 
             // Get SendGrid configuration options
             services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
 
             // Get SMTP configuration options
             services.Configure<SmtpOptions>(Configuration.GetSection("SmtpOptions"));
+
+            //services.Configure<AuthMessageSenderOptions>(Configuration);
 
             // Get Super Admin Default options
             services.Configure<SuperAdminDefaultOptions>(Configuration.GetSection("SuperAdminDefaultOptions"));

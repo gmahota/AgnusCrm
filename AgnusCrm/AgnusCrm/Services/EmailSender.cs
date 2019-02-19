@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,43 +14,59 @@ namespace AgnusCrm.Services
     // For more details see https://go.microsoft.com/fwlink/?LinkID=532713
     public class EmailSender : IEmailSender
     {
+        //dependency injection
+        private SendGridOptions _sendGridOptions { get; }
+        private INetcoreService _netcoreService { get; }
+        private SmtpOptions _smtpOptions { get; }
         private readonly IConfiguration _configuration;
 
-        public EmailSender(IConfiguration configuration)
+
+        public EmailSender(IConfiguration configuration, IOptions<SendGridOptions> sendGridOptions,
+            INetcoreService netcoreService,
+            IOptions<SmtpOptions> smtpOptions)
         {
             _configuration = configuration;
+            _sendGridOptions = sendGridOptions.Value;
+            _netcoreService = netcoreService;
+            _smtpOptions = smtpOptions.Value;
         }
+        
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {
             try
             {
-                using (var client = new SmtpClient())
-                {
-                    var credential = new NetworkCredential
-                    {
-                        UserName = _configuration["Email:Username"],
-                        Password = _configuration["Email:Password"]
-                    };
 
-                    client.Credentials = credential;
-                    client.Host = _configuration["Email:Host"];
-                    client.Port = int.Parse(_configuration["Email:Port"]);
-                    client.EnableSsl = true;
+                await _netcoreService.SendEmailBySendGridAsync(_sendGridOptions.SendGridKey, _sendGridOptions.FromEmail,
+                    _sendGridOptions.FromFullName,  subject,  message,  email);
 
-                    using (var emailMessage = new MailMessage())
-                    {
-                        emailMessage.To.Add(new MailAddress(email));
-                        emailMessage.From = new MailAddress(_configuration["Email:Username"]);
-                        emailMessage.Subject = subject;
 
-                        emailMessage.IsBodyHtml = true;
+                //using (var client = new SmtpClient())
+                //{
+                //    var credential = new NetworkCredential
+                //    {
+                //        UserName = _configuration["Email:Username"],
+                //        Password = _configuration["Email:Password"]
+                //    };
 
-                        emailMessage.Body = message;
+                //    client.Credentials = credential;
+                //    client.Host = _configuration["Email:Host"];
+                //    client.Port = int.Parse(_configuration["Email:Port"]);
+                //    client.EnableSsl = true;
 
-                        client.Send(emailMessage);
-                    }
-                }
+                //    using (var emailMessage = new MailMessage())
+                //    {
+                //        emailMessage.To.Add(new MailAddress(email));
+                //        emailMessage.From = new MailAddress(_configuration["Email:Username"]);
+                //        emailMessage.Subject = subject;
+
+                //        emailMessage.IsBodyHtml = true;
+
+                //        emailMessage.Body = message;
+
+                //        client.Send(emailMessage);
+                //    }
+                //}
                 await Task.CompletedTask;
             }
             catch (Exception ex)

@@ -20,10 +20,10 @@ namespace AgnusCrm.Data
         {
             base.OnModelCreating(builder);
 
+            #region GeneralSeed
             builder.Entity<ProductPrice>()
                 .HasKey(a => new { a.product, a.coin, a.unity });
 
-            #region GeneralSeed
             builder.Entity<Coin>().HasData(
                 new Coin { code = "MZN", desc = "Metical", decimalPlaces = 2, Symbol = "MT" },
                 new Coin { code = "USD", desc = "Dollar", decimalPlaces = 0, Symbol = "$" },
@@ -37,6 +37,8 @@ namespace AgnusCrm.Data
 
             #endregion
         }
+
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
         public DbSet<Product> Product { get; set; }
 
