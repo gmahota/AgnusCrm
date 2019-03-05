@@ -26,5 +26,22 @@ namespace AgnusCrm.MVC
             public const string Name = "User Role";
         }
 
+        public static class CustomersIndex
+        {
+            public const string Controller = "Customers";
+            public const string Action = "Index";
+            public const string Role = "Customer";
+            public const string Url = "/Customers/Index";
+            public const string Name = "Customer Role";
+        }
+
+        public static class PriceListIndex
+        {
+            public const string Controller = "PriceList";
+            public const string Action = "Index";
+            public const string Role = "PriceList";
+            public const string Url = "/PriceList/Index";
+            public const string Name = "Price List Role";
+        }
     }
 }

@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject AgnusCrm.Data.ApplicationDbContext Context
+@{
+    ApplicationUser signedUser = await UserManager.GetUserAsync(User);
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,8 +15,12 @@
 
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link href="~/lib/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
     <!-- Font Awesome -->
-    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/brands.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
+
     <!-- Ionicons -->
     <link href="~/lib/AdminLTE/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" />
     <!-- DataTables -->
@@ -51,12 +63,19 @@
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
+            <a href="#" class="sidebar-toggle2" data-toggle="push-menu" role="button">
+                
+                <i class="fa fa-align-justify"></i>
             </a>
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
-                <partial name="_LoginPartial" />
+                @if (signedUser != null)
+                {
+                    <ul class="nav navbar-nav"></ul>
+
+                }
+
+                @await Html.PartialAsync("_LoginPartial")
 
             </div>
         </nav>
@@ -64,28 +83,6 @@
 
     <partial name="_SideBar" />
 
-    @*<header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AgnusCrm</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <partial name="_LoginPartial" />
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>*@
     <div class="content-wrapper">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">

@@ -5,38 +5,62 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts {
+
+    <script language=javascript type='text/javascript'>
+        $(document).ready(function () {
+            $('#menuCustomer').addClass("active");
+        });
+
+    </script>
+
+}
+
 <h2>Index</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<table class="table table-hover table-striped" style="width:100%">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.pvp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.entity)
-            </th>
             <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entity.name)
+            </th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.Entity.telphone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entity.address)
+            </th>
+
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.pvp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.entity.id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="tools">
+                        <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.id" class="btn btn-primary btn-xs"><i class="fa fa-list"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                    </div>
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Entity.name)
+                </td>
+                <td class="hidden">
+                    @Html.DisplayFor(modelItem => item.Entity.telphone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Entity.address)
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>

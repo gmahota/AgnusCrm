@@ -26,7 +26,7 @@ namespace AgnusCrm.Models
         public int pvp { get; set; }
 
         [ForeignKey("entityId")]
-        public Entity entity { get; set; }
+        public Entity Entity { get; set; }
     }
 
     public class Entity

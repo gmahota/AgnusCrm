@@ -115,8 +115,7 @@ namespace AgnusCrm.Services
             }
             return result;
         }
-
-
+        
         public async Task<string> UploadFile(List<IFormFile> files, IHostingEnvironment env)
         {
             var result = "";

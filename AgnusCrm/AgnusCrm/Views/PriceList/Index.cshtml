@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewData["EntityIcon"] = "fa fa-bank";
+    ViewData["ListTitle"] = "Customer List";
+    ViewData["IndexInfo"] = "Customer is an organization that buy products from your company. You sell products to them.";
 }
 
 
@@ -79,7 +83,7 @@
 </section>
 <section class="content">
 
-    @await Html.PartialAsync("PriceList/_Search",new AgnusCrm.Models.PriceList.ViewSearchPriceList { })
+    @await Html.PartialAsync("PriceList/_Search", new AgnusCrm.Models.PriceList.ViewSearchPriceList { })
 
     @*<partial name="PriceList/_Search" />*@
 
@@ -148,7 +152,7 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.price)
-                                        
+
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.stock)
