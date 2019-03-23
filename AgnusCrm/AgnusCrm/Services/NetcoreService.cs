@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Microsoft.Extensions.Options;
+using AgnusCrm.Models.Invent;
 
 namespace AgnusCrm.Services
 {
@@ -206,75 +207,75 @@ namespace AgnusCrm.Services
             }
         }
 
-        //public VMStock GetStockByProductAndWarehouse(string productId, string warehouseId)
-        //{
-        //    VMStock result = new VMStock();
+        public VMStock GetStockByProductAndWarehouse(string productId, string warehouseId)
+        {
+            VMStock result = new VMStock();
 
-        //    try
-        //    {
-        //        Product product = _context.Product.Where(x => x.productId.Equals(productId)).FirstOrDefault();
-        //        Warehouse warehouse = _context.Warehouse.Where(x => x.warehouseId.Equals(warehouseId)).FirstOrDefault();
+            try
+            {
+                Product product = _context.Product.Where(x => x.productId.Equals(productId)).FirstOrDefault();
+                Warehouse warehouse = _context.Warehouse.Where(x => x.warehouseId.Equals(warehouseId)).FirstOrDefault();
 
-        //        if (product != null && warehouse != null)
-        //        {
-        //            VMStock stock = new VMStock();
-        //            stock.Product = product.productCode;
-        //            stock.Warehouse = warehouse.warehouseName;
-        //            stock.QtyReceiving = _context.ReceivingLine.Where(x => x.productId.Equals(product.productId) && x.warehouseId.Equals(warehouse.warehouseId)).Sum(x => x.qtyReceive);
-        //            stock.QtyShipment = _context.ShipmentLine.Where(x => x.productId.Equals(product.productId) && x.warehouseId.Equals(warehouse.warehouseId)).Sum(x => x.qtyShipment);
-        //            stock.QtyTransferIn = _context.TransferInLine.Where(x => x.productId.Equals(product.productId) && x.transferIn.warehouseIdTo.Equals(warehouse.warehouseId)).Sum(x => x.qty);
-        //            stock.QtyTransferOut = _context.TransferOutLine.Where(x => x.productId.Equals(product.productId) && x.transferOut.warehouseIdFrom.Equals(warehouse.warehouseId)).Sum(x => x.qty);
-        //            stock.QtyOnhand = stock.QtyReceiving + stock.QtyTransferIn - stock.QtyShipment - stock.QtyTransferOut;
+                if (product != null && warehouse != null)
+                {
+                    VMStock stock = new VMStock();
+                    stock.Product = product.productCode;
+                    stock.Warehouse = warehouse.warehouseName;
+                    stock.QtyReceiving = _context.ReceivingLine.Where(x => x.productId.Equals(product.productId) && x.warehouseId.Equals(warehouse.warehouseId)).Sum(x => x.qtyReceive);
+                    stock.QtyShipment = _context.ShipmentLine.Where(x => x.productId.Equals(product.productId) && x.warehouseId.Equals(warehouse.warehouseId)).Sum(x => x.qtyShipment);
+                    stock.QtyTransferIn = _context.TransferInLine.Where(x => x.productId.Equals(product.productId) && x.transferIn.warehouseIdTo.Equals(warehouse.warehouseId)).Sum(x => x.qty);
+                    stock.QtyTransferOut = _context.TransferOutLine.Where(x => x.productId.Equals(product.productId) && x.transferOut.warehouseIdFrom.Equals(warehouse.warehouseId)).Sum(x => x.qty);
+                    stock.QtyOnhand = stock.QtyReceiving + stock.QtyTransferIn - stock.QtyShipment - stock.QtyTransferOut;
 
-        //            result = stock;
-        //        }
-
-
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-
-        //    return result;
-
-        //}
-
-        //public List<VMStock> GetStockPerWarehouse()
-        //{
-        //    List<VMStock> result = new List<VMStock>();
-
-        //    try
-        //    {
-        //        List<VMStock> stocks = new List<VMStock>();
-        //        List<Product> products = new List<Product>();
-        //        List<Warehouse> warehouses = new List<Warehouse>();
-        //        warehouses = _context.Warehouse.ToList();
-        //        products = _context.Product.ToList();
-        //        foreach (var item in products)
-        //        {
-        //            foreach (var wh in warehouses)
-        //            {
-        //                VMStock stock = stock = GetStockByProductAndWarehouse(item.productId, wh.warehouseId);
-
-        //                if (stock != null) stocks.Add(stock);
-
-        //            }
+                    result = stock;
+                }
 
 
-        //        }
+            }
+            catch (Exception)
+            {
 
-        //        result = stocks;
-        //    }
-        //    catch (Exception)
-        //    {
+                throw;
+            }
 
-        //        throw;
-        //    }
+            return result;
 
-        //    return result;
-        //}
+        }
+
+        public List<VMStock> GetStockPerWarehouse()
+        {
+            List<VMStock> result = new List<VMStock>();
+
+            try
+            {
+                List<VMStock> stocks = new List<VMStock>();
+                List<Product> products = new List<Product>();
+                List<Warehouse> warehouses = new List<Warehouse>();
+                warehouses = _context.Warehouse.ToList();
+                products = _context.Product.ToList();
+                foreach (var item in products)
+                {
+                    foreach (var wh in warehouses)
+                    {
+                        VMStock stock = stock = GetStockByProductAndWarehouse(item.productId, wh.warehouseId);
+
+                        if (stock != null) stocks.Add(stock);
+
+                    }
+
+
+                }
+
+                result = stocks;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
 
         public async Task InitCRM()
         {

@@ -1,4 +1,5 @@
 ﻿using AgnusCrm.Models;
+using AgnusCrm.Models.Invent;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -33,9 +34,9 @@ namespace AgnusCrm.Services
 
         Task CreateDefaultSuperAdmin();
 
-        //VMStock GetStockByProductAndWarehouse(string productId, string warehouseId);
+        VMStock GetStockByProductAndWarehouse(string productId, string warehouseId);
 
-        //List<VMStock> GetStockPerWarehouse();
+        List<VMStock> GetStockPerWarehouse();
 
         Task InitCRM();
     }

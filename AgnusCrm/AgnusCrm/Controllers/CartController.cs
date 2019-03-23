@@ -53,15 +53,15 @@ namespace AgnusCrm.Controllers
 
             if (cart == null)
             {
-                cart = new List<Item>();
-                cart.Add(
+                cart = new List<Item>
+                {
                     new Item()
                     {
                         productId = id,
                         quantity = quantity,
                         price = price
                     }
-                );
+                };
 
 
             }
@@ -126,8 +126,6 @@ namespace AgnusCrm.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create()
         {
-            string cliente = "";
-
             var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session,
                 "cart");
 

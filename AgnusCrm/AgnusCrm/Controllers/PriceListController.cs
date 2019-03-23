@@ -35,24 +35,24 @@ namespace AgnusCrm.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 var priceList = _context.Product
-                    .Include(p => p.Brand)
-                    .Include(p => p.Family)
-                    .Include(p => p.SubFamily)
-                    .Include(p => p.ProductPrice)
-                    .Where(s => (s.code.Contains(searchString) ||
-                    s.desc.Contains(searchString)) && s.stock > 0);
+                    //.Include(p => p.Brand)
+                    //.Include(p => p.Family)
+                    //.Include(p => p.SubFamily)
+                    //.Include(p => p.ProductPrice)
+                    .Where(s => (s.productCode.Contains(searchString) ||
+                    s.description.Contains(searchString)) );
 
                 return View(await priceList.ToListAsync());
 
             }
             else
             {
-                var priceList = _context.Product
-                    .Include(p => p.Brand)
-                    .Include(p => p.Family)
-                    .Include(p => p.SubFamily)
-                    .Include(p => p.ProductPrice)
-                    .Where(s => s.stock > 0);
+                var priceList = _context.Product;
+                    //.Include(p => p.Brand)
+                    //.Include(p => p.Family)
+                    //.Include(p => p.SubFamily)
+                    //.Include(p => p.ProductPrice)
+                    //.Where(s => s.stock > 0)
 
                 return View(await priceList.ToListAsync());
             }
