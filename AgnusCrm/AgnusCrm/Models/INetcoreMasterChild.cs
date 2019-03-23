@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AgnusCrm.Models
 {
-    public class IAgnusCrmMasterChild : IAgnusCrmBasic
+    public class INetcoreMasterChild : INetcoreBasic
     {
         //never used to store data, just a mark for master detail
         public string HasChild { get; set; }

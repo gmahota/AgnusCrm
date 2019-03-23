@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgnusCrm.Models
 {
-    public class IAgnusCrmBasic
+    public class INetcoreBasic
     {
         [Display(Name = "Created At")]
         public DateTime createdAt { get; set; } = DateTime.UtcNow;
