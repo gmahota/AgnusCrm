@@ -8205,6 +8205,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\lib\AdminLTE\bower_components\bootstrap-datepicker\grunt\" />
     <Folder Include="wwwroot\lib\AdminLTE\build\grunt\" />
   </ItemGroup>

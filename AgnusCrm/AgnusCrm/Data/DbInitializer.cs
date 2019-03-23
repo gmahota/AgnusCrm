@@ -13,7 +13,7 @@ namespace AgnusCrm.Data
         public static async Task Initialize(ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            INetcoreService netcoreService)
+            IAgnusCrmService AgnusCrmService)
         {
             context.Database.EnsureCreated();
 
@@ -24,10 +24,10 @@ namespace AgnusCrm.Data
             }
 
             //init app with super admin user
-            await netcoreService.CreateDefaultSuperAdmin();
+            await AgnusCrmService.CreateDefaultSuperAdmin();
 
             //init crm
-            await netcoreService.InitCRM();
+            await AgnusCrmService.InitCRM();
 
         }
     }

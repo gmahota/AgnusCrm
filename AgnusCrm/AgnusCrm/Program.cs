@@ -30,9 +30,9 @@ namespace AgnusCrm
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    var netcoreService = services.GetRequiredService<INetcoreService>();
+                    var AgnusCrmService = services.GetRequiredService<IAgnusCrmService>();
 
-                    DbInitializer.Initialize(context, userManager, roleManager, netcoreService).Wait();
+                    DbInitializer.Initialize(context, userManager, roleManager, AgnusCrmService).Wait();
                 }
                 catch (Exception ex)
                 {
@@ -50,7 +50,7 @@ namespace AgnusCrm
         }
 
         //AzureAppService log activated by default if application hosted on Azure
-        //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-2.1&tabs=aspnetcore2x#appservice
+        //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=AspNetCore-2.1&tabs=AspNetCore2x#appservice
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

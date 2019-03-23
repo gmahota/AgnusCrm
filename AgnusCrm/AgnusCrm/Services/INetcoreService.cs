@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AgnusCrm.Services
 {
-    public interface INetcoreService
+    public interface IAgnusCrmService
     {
         Task SendEmailBySendGridAsync(string apiKey, string fromEmail, string fromFullName, string subject, string message, string email);
 

@@ -40,7 +40,66 @@ namespace AgnusCrm.Data
 
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
-        public DbSet<Product> Product { get; set; }
+        public DbSet<AgnusCrm.Models.Invent.Branch> Branch { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.Warehouse> Warehouse { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.Product> Product { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.Vendor> Vendor { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.VendorLine> VendorLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.PurchaseOrder> PurchaseOrder { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.PurchaseOrderLine> PurchaseOrderLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.Customer> Customer { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.CustomerLine> CustomerLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.SalesOrder> SalesOrder { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.SalesOrderLine> SalesOrderLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.Shipment> Shipment { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.ShipmentLine> ShipmentLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.Receiving> Receiving { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.ReceivingLine> ReceivingLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.TransferOrder> TransferOrder { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.TransferOrderLine> TransferOrderLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.TransferOut> TransferOut { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.TransferOutLine> TransferOutLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.TransferIn> TransferIn { get; set; }
+
+        public DbSet<AgnusCrm.Models.Invent.TransferInLine> TransferInLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.Rating> Rating { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.Activity> Activity { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.Channel> Channel { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.Stage> Stage { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.AccountExecutive> AccountExecutive { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.Lead> Lead { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.LeadLine> LeadLine { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.Opportunity> Opportunity { get; set; }
+
+        public DbSet<AgnusCrm.Models.Crm.OpportunityLine> OpportunityLine { get; set; }
+
 
         public DbSet<Brand> Brand { get; set; }
 
@@ -57,8 +116,6 @@ namespace AgnusCrm.Data
         public DbSet<Coin> Coin { get; set; }
 
         public DbSet<Item> Item { get; set; }
-
-        public DbSet<Customer> Customer { get; set; }
 
         public DbSet<Contact> Contact { get; set; }
 

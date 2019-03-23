@@ -16,18 +16,18 @@ namespace AgnusCrm.Services
     {
         //dependency injection
         private SendGridOptions _sendGridOptions { get; }
-        private INetcoreService _netcoreService { get; }
+        private IAgnusCrmService _AgnusCrmService { get; }
         private SmtpOptions _smtpOptions { get; }
         private readonly IConfiguration _configuration;
 
 
         public EmailSender(IConfiguration configuration, IOptions<SendGridOptions> sendGridOptions,
-            INetcoreService netcoreService,
+            IAgnusCrmService AgnusCrmService,
             IOptions<SmtpOptions> smtpOptions)
         {
             _configuration = configuration;
             _sendGridOptions = sendGridOptions.Value;
-            _netcoreService = netcoreService;
+            _AgnusCrmService = AgnusCrmService;
             _smtpOptions = smtpOptions.Value;
         }
         
@@ -37,7 +37,7 @@ namespace AgnusCrm.Services
             try
             {
 
-                await _netcoreService.SendEmailBySendGridAsync(_sendGridOptions.SendGridKey, _sendGridOptions.FromEmail,
+                await _AgnusCrmService.SendEmailBySendGridAsync(_sendGridOptions.SendGridKey, _sendGridOptions.FromEmail,
                     _sendGridOptions.FromFullName,  subject,  message,  email);
 
 

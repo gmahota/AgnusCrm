@@ -119,7 +119,7 @@ namespace AgnusCrm
             //services.AddSingleton<IEmailSender, EmailSender>();
 
             // Add DI for Dotnetdesk
-            services.AddTransient<INetcoreService, NetcoreService>();
+            services.AddTransient<IAgnusCrmService, AgnusCrmService>();
 
             // Get SendGrid configuration options
             services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
@@ -148,7 +148,7 @@ namespace AgnusCrm
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/AspNetCore-hsts.
                 app.UseHsts();
             }
 

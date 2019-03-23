@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgnusCrm.Models.Invent;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -11,9 +12,9 @@ namespace AgnusCrm.Models
     public class Item
     {
         [Key]
-        public int id { get; set; }
+        public string id { get; set; }
 
-        public int productId { get; set; }
+        public string productId { get; set; }
 
         [Display(Name = "Preço")]
         public double price { get; set; }
@@ -23,8 +24,6 @@ namespace AgnusCrm.Models
 
         [ForeignKey("productId")]
         public Product Product { get; set; }
-
-
     }
 
     #region Iventario
@@ -36,63 +35,63 @@ namespace AgnusCrm.Models
         Inactive
     }
     
-    public partial class Product
-    {
-        [Key]
-        public int id { get; set; }
+    //public partial class Product
+    //{
+    //    [Key]
+    //    public int id { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        [Display(Name = "Codigo")]
-        public string code { get; set; }
+    //    [Required]
+    //    [StringLength(100)]
+    //    [Display(Name = "Codigo")]
+    //    public string code { get; set; }
 
-        [StringLength(100)]
-        [Display(Name = "Descrição")]
-        public string desc { get; set; }
+    //    [StringLength(100)]
+    //    [Display(Name = "Descrição")]
+    //    public string desc { get; set; }
 
-        [Required]
-        [Range(0, 9999999)]
-        [Display(Name = "Preço")]
-        public double price { get; set; }
+    //    [Required]
+    //    [Range(0, 9999999)]
+    //    [Display(Name = "Preço")]
+    //    public double price { get; set; }
 
-        [Display(Name = "Famila")]
-        [StringLength(20)]
-        public string familyCode { get; set; }
+    //    [Display(Name = "Famila")]
+    //    [StringLength(20)]
+    //    public string familyCode { get; set; }
 
-        [Display(Name = "Sub-Famila")]
-        public int subFamilyCode { get; set; }
+    //    [Display(Name = "Sub-Famila")]
+    //    public int subFamilyCode { get; set; }
 
-        [Display(Name = "Marca")]
-        [StringLength(20)]
-        public string brandCode { get; set; }
+    //    [Display(Name = "Marca")]
+    //    [StringLength(20)]
+    //    public string brandCode { get; set; }
 
-        [Display(Name = "Observações")]
-        public string notes { get; set; }
+    //    [Display(Name = "Observações")]
+    //    public string notes { get; set; }
 
-        [Required]
-        [Range(0, 9999999)]
-        [Display(Name = "Stock")]
-        public double stock { get; set; }
+    //    [Required]
+    //    [Range(0, 9999999)]
+    //    [Display(Name = "Stock")]
+    //    public double stock { get; set; }
 
-        [Required]
-        [Display(Name = "Status")]
-        [DefaultValue(ProductStatusTypes.Active)]
-        public ProductStatusTypes status { get; set; }
+    //    [Required]
+    //    [Display(Name = "Status")]
+    //    [DefaultValue(ProductStatusTypes.Active)]
+    //    public ProductStatusTypes status { get; set; }
 
-        [ForeignKey("familyCode")]
-        [Display(Name = "Famila")]
-        public virtual Family Family { get; set; }
+    //    [ForeignKey("familyCode")]
+    //    [Display(Name = "Famila")]
+    //    public virtual Family Family { get; set; }
 
-        [ForeignKey("subFamilyCode")]
-        [Display(Name = "Sub-Famila")]
-        public virtual SubFamily SubFamily { get; set; }
+    //    [ForeignKey("subFamilyCode")]
+    //    [Display(Name = "Sub-Famila")]
+    //    public virtual SubFamily SubFamily { get; set; }
 
-        [ForeignKey("brandCode")]
-        [Display(Name = "Marca")]
-        public virtual Brand Brand { get; set; }
+    //    [ForeignKey("brandCode")]
+    //    [Display(Name = "Marca")]
+    //    public virtual Brand Brand { get; set; }
 
-        public IList<ProductPrice> ProductPrice { get; set; }
-    }
+    //    public IList<ProductPrice> ProductPrice { get; set; }
+    //}
 
     public partial class ProductPrice
     {

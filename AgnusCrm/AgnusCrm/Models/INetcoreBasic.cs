@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AgnusCrm.Models
+{
+    public class IAgnusCrmBasic
+    {
+        [Display(Name = "Created At")]
+        public DateTime createdAt { get; set; } = DateTime.UtcNow;
+    }
+}

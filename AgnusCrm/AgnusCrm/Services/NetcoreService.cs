@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 
 namespace AgnusCrm.Services
 {
-    public class NetcoreService : INetcoreService
+    public class AgnusCrmService : IAgnusCrmService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -25,7 +25,7 @@ namespace AgnusCrm.Services
         private readonly IRoles _roles;
         private readonly SuperAdminDefaultOptions _superAdminDefaultOptions;
 
-        public NetcoreService(UserManager<ApplicationUser> userManager,
+        public AgnusCrmService(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             ApplicationDbContext context,
             SignInManager<ApplicationUser> signInManager,

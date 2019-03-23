@@ -40,14 +40,14 @@ namespace AgnusCrm.Controllers
 
             foreach (var item in cart)
             {
-                item.Product = _context.Product.Single(p => p.id == item.productId);
+                item.Product = _context.Product.Single(p => p.productId == item.productId);
             }
 
             return View(cart);
         }
 
         [Route("AddItem/{id}")]
-        public IActionResult AddItem(int id, [FromQuery] int quantity, [FromQuery] double price)
+        public IActionResult AddItem(string id, [FromQuery] int quantity, [FromQuery] double price)
         {
             var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
@@ -89,7 +89,7 @@ namespace AgnusCrm.Controllers
             return new JsonResult(cart);
         }
 
-        private int Exists(List<Item> cart, int id)
+        private int Exists(List<Item> cart, string id)
         {
             for (int i = 0; i < cart.Count; i++)
             {
@@ -102,7 +102,7 @@ namespace AgnusCrm.Controllers
         }
 
         [Route("RemoveItem/{id}")]
-        public IActionResult RemoveItem(int id)
+        public IActionResult RemoveItem(string id)
         {
             var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
@@ -138,7 +138,7 @@ namespace AgnusCrm.Controllers
 
             foreach (var item in cart)
             {
-                item.Product = _context.Product.Single(p => p.id == item.productId);
+                item.Product = _context.Product.Single(p => p.productId == item.productId);
                 linhas +=
                     string.Format(
                     @"<tr> 
@@ -147,7 +147,7 @@ namespace AgnusCrm.Controllers
                         <td>{2}</td>
                         <td>{3}</td>
                         <td>{4}</td>
-                     </tr>", item.Product.code, item.Product.desc, Math.Round(item.price, 2),
+                     </tr>", item.Product.productCode, item.Product.description, Math.Round(item.price, 2),
                         item.quantity, Math.Round(item.price * item.quantity, 2));
             }
 
